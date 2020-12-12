@@ -1,6 +1,13 @@
 
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultListModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,15 +25,51 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public String componentLabel="";
     public String components = "";
+    public DefaultListModel<String> defaultListModel;
     
+    public List<String> metadatalist;
+    public Map<String, String[]> map;
+    
+    public static final String newChangeLineComment = "<!--new changes here-->\n";
+    public static float VERSION = 41.0f;
+    public static final String head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Package xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n";
+    public static final String version = "<version>" + VERSION + "</version>\n";
+    public static final String tail = "</Package>\n";
+    
+    public static String packageString = "";
+
+        
     public NewJFrame() {
+        
         initComponents();
         
-        jLabel_oldpackagenames.setVisible(false);
+        init();
+       
+    }
+    
+     private void init() {
         jList_oldpackage_names.setVisible(false);
+        jLabel_added.setVisible(false);
+        jButton_add.setVisible(false);
+        jButton_preview.setVisible(false);
+        jButton_save.setVisible(false);
         
         jPopupMenu.add(jPanel1);
+        
+        map = new HashMap<String, String[]>();
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
+        jLabel_newpackage_name.setText( "package_" + dateFormat.format(new Date())+ ".xml");
+        
+        MdUtility mdUtility = new MdUtility();
+        metadatalist = Arrays.asList( mdUtility.metadata_list.split("\n"));
+        
+        defaultListModel = new DefaultListModel<>();
+        jList_metadata_types.setModel(defaultListModel);
+        
+                
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,20 +87,20 @@ public class NewJFrame extends javax.swing.JFrame {
         buttonGroup_pkgaction = new javax.swing.ButtonGroup();
         jPanel_pkg_details = new javax.swing.JPanel();
         jTextField_metadata = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea_components = new javax.swing.JTextArea();
         jButton_add = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButton_preview = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel_added = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel_newpackage_name = new javax.swing.JLabel();
+        jButton_save = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList_oldpackage_names = new javax.swing.JList<>();
-        jLabel_newpackage_name = new javax.swing.JLabel();
-        jLabel_oldpackagenames = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea_components = new javax.swing.JTextArea();
         jPanel3_org_details = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -70,6 +113,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        jList_metadata_types.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_metadata_typesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList_metadata_types);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -80,7 +128,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPopupMenu.setFocusable(false);
@@ -96,10 +144,6 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextArea_components.setColumns(20);
-        jTextArea_components.setRows(5);
-        jScrollPane1.setViewportView(jTextArea_components);
-
         jButton_add.setText("Add  \nComponents");
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,17 +151,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Preview");
+        jButton_preview.setText("Preview");
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 12)); // NOI18N
         jLabel1.setText("select metadata");
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 12)); // NOI18N
-        jLabel2.setText("enter components {separated}");
-        jLabel2.setToolTipText("");
-
-        jLabel3.setForeground(new java.awt.Color(24, 219, 23));
-        jLabel3.setText("Added");
+        jLabel_added.setForeground(new java.awt.Color(24, 219, 23));
+        jLabel_added.setText("Added");
 
         buttonGroup_pkgaction.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -137,19 +177,54 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel_newpackage_name.setText("new package name");
+
+        jButton_save.setText("Save");
+        jButton_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_saveActionPerformed(evt);
+            }
+        });
+
+        jList_oldpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder("select package to update"));
         jList_oldpackage_names.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "None" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jList_oldpackage_names.setToolTipText("");
         jScrollPane3.setViewportView(jList_oldpackage_names);
 
-        jLabel_newpackage_name.setText("new package name");
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
 
-        jLabel_oldpackagenames.setFont(new java.awt.Font("Ubuntu", 2, 12)); // NOI18N
-        jLabel_oldpackagenames.setText("select package to update");
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Enter Components"));
 
-        jButton3.setText("Save");
+        jTextArea_components.setColumns(20);
+        jTextArea_components.setRows(5);
+        jScrollPane1.setViewportView(jTextArea_components);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel_pkg_detailsLayout = new javax.swing.GroupLayout(jPanel_pkg_details);
         jPanel_pkg_details.setLayout(jPanel_pkg_detailsLayout);
@@ -162,72 +237,61 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel_newpackage_name, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel_newpackage_name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_metadata, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addComponent(jTextField_metadata, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_oldpackagenames)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_add, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel3)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(34, 34, 34))
+                    .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_pkg_detailsLayout.createSequentialGroup()
+                            .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton_preview))
+                        .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                            .addComponent(jButton_add, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel_added)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67))
         );
         jPanel_pkg_detailsLayout.setVerticalGroup(
             jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jLabel_oldpackagenames)
-                    .addComponent(jLabel_newpackage_name))
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jLabel_newpackage_name)))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_add)
-                            .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jButton3))
-                        .addGap(9, 9, 9))
+                            .addComponent(jLabel_added))))
+                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addComponent(jTextField_metadata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                        .addContainerGap())))
+                            .addComponent(jButton_save)
+                            .addComponent(jButton_preview))))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addComponent(jTextField_metadata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Organization "));
@@ -327,7 +391,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(jPanel3_org_details, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,37 +411,117 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addActionPerformed
         // TODO add your handling code here:
         components = jTextArea_components.getText().toString();
-        jTextArea_components.setText(componentLabel);
+        
+        String [] arr = formatComponents(components);
+        map.put( jTextField_metadata.getText().toString() , arr);      
         
     }//GEN-LAST:event_jButton_addActionPerformed
 
-    private void jTextField_metadataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_metadataKeyReleased
-        // TODO add your handling code here:
-        String metadata =  jTextField_metadata.getText().trim();
-        if(!metadata.equals("")){
-            jPopupMenu.show(jTextField_metadata, 0 , jTextField_metadata.getHeight());
+    public static String[] formatComponents(String cmp){
+       
+        boolean isTabSeparated = cmp.contains("\t");
+        boolean isCommaSeparated = cmp.contains(",");
+        boolean isSpaceSeparated = cmp.contains(" ");
+        String[] arr = new String[1];
+
+        if(isTabSeparated){
+            // System.out.println("Tab separated");
+            arr = cmp.split("\t");
+        }else if(isSpaceSeparated){
+            // System.out.println("Space separated");
+            arr = cmp.split(" ");
+        }else if(isCommaSeparated){
+            // System.out.println("Comma separated");
+            arr = cmp.split(",");
+        }else{
+            arr[0] = cmp;
         }
         
-    }//GEN-LAST:event_jTextField_metadataKeyReleased
+        return arr;
+    }
+    
+    private void jTextField_metadataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_metadataKeyReleased
+        // TODO add your handling code here:
 
+        String metadata =  jTextField_metadata.getText().trim().toLowerCase();
+
+        if(!metadata.equals("")){
+            
+            defaultListModel.removeAllElements();
+            
+            for(String m : metadatalist){
+                if(m.toLowerCase().contains(metadata))
+                    defaultListModel.addElement(m);
+            }
+            jList_metadata_types.setSelectedIndex(0);
+            jPopupMenu.show(jTextField_metadata, 0 , jTextField_metadata.getHeight());
+      
+            if(evt.getKeyCode() == evt.VK_ENTER){
+                jTextField_metadata.setText( jList_metadata_types.getSelectedValue() );
+            }
+        }
+
+    }//GEN-LAST:event_jTextField_metadataKeyReleased
+    
+    
+    
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-        jLabel_oldpackagenames.setVisible(false);
         jList_oldpackage_names.setVisible(false);
-        
         jLabel_newpackage_name.setVisible(true);
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
+        jLabel_newpackage_name.setText( "package_" + dateFormat.format(new Date())+ ".xml");
         
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         jLabel_newpackage_name.setVisible(false);
-
-        jLabel_oldpackagenames.setVisible(true);
         jList_oldpackage_names.setVisible(true);
 
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
+    private void jList_metadata_typesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_metadata_typesMouseClicked
+        // TODO add your handling code here:
+        jTextField_metadata.setText(jList_metadata_types.getSelectedValue());
+    }//GEN-LAST:event_jList_metadata_typesMouseClicked
+
+    private void jButton_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saveActionPerformed
+        // TODO add your handling code here:
+        
+        packageString= createPackageString(map);
+        
+    }//GEN-LAST:event_jButton_saveActionPerformed
+    
+    public static String createPackageString(Map<String, String[]> allcomp){
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(head);
+
+        for(Map.Entry<String, String[]> entry : allcomp.entrySet() ){
+            
+            sb.append("<types>\n");
+            String key_name = entry.getKey();
+            String [] value_members = entry.getValue();
+
+            if(value_members.length > 0){
+                
+                for(String member: value_members)
+                    sb.append("<members>"+member+"</members>\n");
+            }   
+            sb.append("<name>"+key_name+"</name>\n</types>\n");    
+        }
+        
+        sb.append(version);
+        sb.append(tail);
+
+        return new String(sb);
+
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -415,27 +559,27 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_pkgaction;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_add;
+    private javax.swing.JButton jButton_preview;
+    private javax.swing.JButton jButton_save;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_added;
     private javax.swing.JLabel jLabel_newpackage_name;
-    private javax.swing.JLabel jLabel_oldpackagenames;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList_metadata_types;
     private javax.swing.JList<String> jList_oldpackage_names;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel3_org_details;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel_pkg_details;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JRadioButton jRadioButton1;
@@ -447,4 +591,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea_components;
     private javax.swing.JTextField jTextField_metadata;
     // End of variables declaration//GEN-END:variables
+
+   
 }
