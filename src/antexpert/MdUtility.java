@@ -12,10 +12,62 @@ package antexpert;
  */
 public class MdUtility {
     
+    private String label;
     private String username;
     private String password;
     private String maxpoll;
-     
+    private String org_type;
+      
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMaxpoll() {
+        return maxpoll;
+    }
+
+    public void setMaxpoll(String maxpoll) {
+        this.maxpoll = maxpoll;
+    }
+
+    public String getOrg_type() {
+        return org_type;
+    }
+
+    public void setOrg_type(String org_type) {
+        this.org_type = org_type;
+    }
+
+    public MdUtility(String label, String username, String password, String maxpoll, String org_type) {
+        this.label = label;
+        this.username = username;
+        this.password = password;
+        this.maxpoll = maxpoll;
+        this.org_type = org_type;
+    }
+    
+    public MdUtility(){}
+    
     public String build_properties = "# build.properties\n" +
     "#\n" +
     "\n" +
@@ -27,9 +79,7 @@ public class MdUtility {
     "#sf.zipFile = <Insert path of the zipfile to be retrieved>\n" +
     "#sf.metadataType = <Insert metadata type name for which listMetadata or bulkRetrieve operations are to be performed>\n" +
     "\n" +
-    "# Use 'https://login.salesforce.com' for production or developer edition (the default if not specified).\n" +
-    "# Use 'https://test.salesforce.com for sandbox.\n" +
-    "sf.serverurl = https://login.salesforce.com\n" +
+    "sf.serverurl = https://"+ org_type +".salesforce.com\n" +
     "\n" +
     "sf.maxPoll = "+  maxpoll +"\n" +
     "# If your network requires an HTTP proxy, see http://ant.apache.org/manual/proxy.html for configuration.\n" +

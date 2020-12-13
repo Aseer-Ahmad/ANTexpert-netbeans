@@ -2,11 +2,14 @@ package antexpert;
 
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -15,11 +18,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -55,7 +63,13 @@ public class NewJFrame extends javax.swing.JFrame {
     //Package members
     public static String packageString = "";
     public Map<String, String[]> map;
+    public Map<String, MdUtility> org_map;
 
+    //folder maps
+    String retreive = "\\Ant\\retreive";
+    String old_pkg = "\\Ant\\old_packages";
+    String config = "\\Ant\\config";
+         
         
     public NewJFrame() {
         
@@ -73,6 +87,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPopupMenu.add(jPanel1);
         
         map = new HashMap<String, String[]>();
+        org_map = new HashMap<String, MdUtility>();
         
         jTextField_newpackage_name.setText( "package.xml");
         
@@ -83,9 +98,34 @@ public class NewJFrame extends javax.swing.JFrame {
         defaultListModel = new DefaultListModel<>();
         jList_metadata_types.setModel(defaultListModel);
         
+        //createFolderMap();
+        
                 
     }
-    
+     
+     private void createFolderMap(){
+        
+        
+         File file = new File(base_path+retreive);
+         if(  !file.isDirectory()){
+             file.mkdirs();
+         }
+         
+         file = new File(base_path+old_pkg);
+         if(  !file.isDirectory()){
+             file.mkdirs();
+         }
+         
+         try{
+            file = new File(base_path+config);
+            if( !file.exists()){
+               file.createNewFile();
+            }
+         }catch(IOException ex){
+             ex.printStackTrace();
+         }
+                  
+     }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,10 +162,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel_urltype = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jLabel_maxpoll = new javax.swing.JLabel();
+        jButton_addOrg = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
@@ -198,11 +239,6 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jList_oldpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder("select package to update"));
-        jList_oldpackage_names.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "None" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jList_oldpackage_names.setToolTipText("");
         jScrollPane3.setViewportView(jList_oldpackage_names);
 
@@ -332,24 +368,26 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 12)); // NOI18N
         jLabel6.setText("select org name");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "None" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane4.setViewportView(jList2);
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel7.setText("sf.serverurl");
 
-        jLabel8.setText("server url name");
+        jLabel_urltype.setText("server url name");
 
         jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
-        jLabel10.setText("maxpoll");
+        jLabel_maxpoll.setText("maxpoll");
 
-        jButton2.setText("Add New Org Cred.");
+        jButton_addOrg.setText("Add New Org Cred.");
+        jButton_addOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_addOrgActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Select org.");
 
         javax.swing.GroupLayout jPanel3_org_detailsLayout = new javax.swing.GroupLayout(jPanel3_org_details);
         jPanel3_org_details.setLayout(jPanel3_org_detailsLayout);
@@ -364,11 +402,13 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_urltype, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel10))))
+                            .addComponent(jLabel_maxpoll))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_addOrg)
                 .addContainerGap())
         );
         jPanel3_org_detailsLayout.setVerticalGroup(
@@ -376,7 +416,9 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton_addOrg)
+                        .addComponent(jButton1))
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,11 +427,11 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8)
+                                .addComponent(jLabel_urltype)
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10)))))
+                                .addComponent(jLabel_maxpoll)))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -606,7 +648,81 @@ public class NewJFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, scrollPane, "Preview Components List",  
                                                JOptionPane.YES_NO_OPTION);
     }//GEN-LAST:event_jButton_previewActionPerformed
+
+    private void jButton_addOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addOrgActionPerformed
+        // TODO add your handling code here:
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 2, 2, 2));
+
+        JTextField username = new JTextField(10);
+        JTextField password = new JTextField(10);
+        JTextField maxpoll = new JTextField(10);
+        maxpoll.setText("20");
+        JTextField label = new JTextField(10);
+        
+        ButtonGroup group = new ButtonGroup();
+        JRadioButton test_org = new JRadioButton();
+        test_org.setText("test");
+        test_org.setSelected(true);
+        JRadioButton login_org = new JRadioButton();
+        login_org.setText("login");
+        group.add(test_org);
+        group.add(login_org);
+        
+        panel.add(new JLabel("Label  : "));
+        panel.add(label);
+        panel.add(new JLabel("username : "));
+        panel.add(username);
+        panel.add(new JLabel("password : "));
+        panel.add(password);
+        panel.add(new JLabel("maxpoll : "));
+        panel.add(maxpoll);
+        panel.add(new JLabel("Select servel url "));
+        panel.add(new JLabel("(Sanbox / production): "));
+        panel.add(test_org);
+        panel.add(login_org);
+        
+        
+        int option =JOptionPane.showConfirmDialog(new JFrame(),
+                                                    panel,
+                                                    "Add credentials here.",
+                                                    JOptionPane.OK_CANCEL_OPTION,
+                                                    JOptionPane.INFORMATION_MESSAGE);
+        // check duplicate label
+        // add security token
+        
+        if(option == JOptionPane.OK_OPTION){
+  
+            String l, u, p, m, tg;
+            l = label.getText();
+            u = username.getText();
+            p = password.getText();
+            m = maxpoll.getText();
+            tg = test_org.isSelected()? "test" : "login";
+            
+            org_map.put(label.getText(), 
+                    new MdUtility( l,
+                            u,
+                            p,
+                            m,
+                            tg) 
+                    );
+            
+            try{
+               BufferedWriter bw = new BufferedWriter(new FileWriter(base_path + config));
+               bw.write(l+"\t"+u+"\t"+p+"\t"+m+"\t"+tg+"\n");
+               
+               bw.close();
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+           
+        }
+        
+    }//GEN-LAST:event_jButton_addOrgActionPerformed
     
+     
     public static String createPackageString(Map<String, String[]> allcomp){
 
         StringBuilder sb = new StringBuilder();
@@ -674,17 +790,18 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_pkgaction;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_add;
+    private javax.swing.JButton jButton_addOrg;
     private javax.swing.JButton jButton_preview;
     private javax.swing.JButton jButton_save;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_added;
+    private javax.swing.JLabel jLabel_maxpoll;
+    private javax.swing.JLabel jLabel_urltype;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList_metadata_types;
     private javax.swing.JList<String> jList_oldpackage_names;
