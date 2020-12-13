@@ -68,22 +68,25 @@ public class MdUtility {
     
     public MdUtility(){}
     
-    public String build_properties = "# build.properties\n" +
-    "#\n" +
-    "\n" +
-    "# Specify the login credentials for the desired Salesforce organization\n" +
-    "sf.username = "+ username + "\n" +
-    "sf.password = "+ password+ "\n" +
-    "#sf.sessionId = <Insert your Salesforce session id here.  Use this or username/password above.  Cannot use both>\n" +
-    "#sf.pkgName = <Insert comma separated package names to be retrieved>\n" +
-    "#sf.zipFile = <Insert path of the zipfile to be retrieved>\n" +
-    "#sf.metadataType = <Insert metadata type name for which listMetadata or bulkRetrieve operations are to be performed>\n" +
-    "\n" +
-    "sf.serverurl = https://"+ org_type +".salesforce.com\n" +
-    "\n" +
-    "sf.maxPoll = "+  maxpoll +"\n" +
-    "# If your network requires an HTTP proxy, see http://ant.apache.org/manual/proxy.html for configuration.\n" +
-    "#";
+    public String getBuildProperties(){
+        
+        return "# build.properties\n" +
+                "#\n" +
+                "\n" +
+                "# Specify the login credentials for the desired Salesforce organization\n" +
+                "sf.username = "+ getUsername() + "\n" +
+                "sf.password = "+ getPassword()+ "\n" +
+                "#sf.sessionId = <Insert your Salesforce session id here.  Use this or username/password above.  Cannot use both>\n" +
+                "#sf.pkgName = <Insert comma separated package names to be retrieved>\n" +
+                "#sf.zipFile = <Insert path of the zipfile to be retrieved>\n" +
+                "#sf.metadataType = <Insert metadata type name for which listMetadata or bulkRetrieve operations are to be performed>\n" +
+                "\n" +
+                "sf.serverurl = https://"+ getOrg_type() +".salesforce.com\n" +
+                "\n" +
+                "sf.maxPoll = "+  getMaxpoll() +"\n" +
+                "# If your network requires an HTTP proxy, see http://ant.apache.org/manual/proxy.html for configuration.\n" +
+                "#";
+    }
     
     public String build_xml = "";
     

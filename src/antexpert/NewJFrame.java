@@ -72,6 +72,7 @@ public class NewJFrame extends javax.swing.JFrame {
     String retreive = "\\Ant\\retreive";
     String old_pkg = "\\Ant\\old_packages";
     String config = "\\Ant\\config";
+    String build_prop = "\\Ant\\build.properties";
          
         
     public NewJFrame() {
@@ -180,7 +181,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel_maxpoll = new javax.swing.JLabel();
         jButton_addOrg = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButton_selectorg = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -422,10 +423,11 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Select org.");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton_selectorg.setText("Select org.");
+        jButton_selectorg.setEnabled(false);
+        jButton_selectorg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton_selectorgActionPerformed(evt);
             }
         });
 
@@ -456,7 +458,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel_maxpoll)))
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -483,7 +485,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                             .addComponent(jLabel_urltype)))
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))))
+                                .addComponent(jButton_selectorg))))
                     .addComponent(jButton_addOrg))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -781,15 +783,27 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_urltype.setText( mdUtility.getOrg_type());
         jLabel_maxpoll.setText( mdUtility.getMaxpoll());
         
+        jButton_selectorg.setEnabled(true);
     }//GEN-LAST:event_jList_orgLabelsMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton_selectorgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_selectorgActionPerformed
         // TODO add your handling code here:
         
         SELECTED_ORG_LABEL = jList_orgLabels.getSelectedValue();
-        JOptionPane.showMessageDialog(this, SELECTED_ORG_LABEL+" credentials have been selected.\nDeployment"
-                + " and retreival will happen there. ");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        // make build file
+        String buildP_string = org_map.get(SELECTED_ORG_LABEL).getBuildProperties();
+
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(base_path + build_prop)));
+            bw.write(buildP_string);
+            bw.close();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+        
+        JOptionPane.showMessageDialog(this, SELECTED_ORG_LABEL +" <- credentials have been selected.\nDeployment"
+                + " and retreival will happen through these. ");
+    }//GEN-LAST:event_jButton_selectorgActionPerformed
     
      
     public static String createPackageString(Map<String, String[]> allcomp){
@@ -859,12 +873,12 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_pkgaction;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_add;
     private javax.swing.JButton jButton_addOrg;
     private javax.swing.JButton jButton_backup_packages;
     private javax.swing.JButton jButton_preview;
     private javax.swing.JButton jButton_save;
+    private javax.swing.JButton jButton_selectorg;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
