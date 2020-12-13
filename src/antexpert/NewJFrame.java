@@ -2,6 +2,11 @@ package antexpert;
 
 
 import java.awt.Dimension;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -44,6 +49,8 @@ public class NewJFrame extends javax.swing.JFrame {
     public static final String head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Package xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n";
     public static final String version = "<version>" + VERSION + "</version>\n";
     public static final String tail = "</Package>\n";
+    
+    public static final String base_path = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     
     //Package members
     public static String packageString = "";
@@ -529,12 +536,16 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saveActionPerformed
         // TODO add your handling code here:
-        
         packageString = createPackageString(map);
         
         // save to directory
-        
-        
+        try{
+            BufferedWriter bf = new BufferedWriter( new FileWriter(new File(base_path + "\\temp.xml")));
+            bf.write(packageString);
+            bf.close();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
         
         JOptionPane.showMessageDialog( new JFrame(),"Package has been saved. Begin creating new package."); 
         
