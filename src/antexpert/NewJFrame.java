@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -50,7 +51,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public DefaultListModel<String> defaultListModel;
     public DefaultListModel<String> defaultListModel_orglabels;
     
-    public String createDirectoryName = "";
+    public String backupDirectoryName = "";
     
     public List<String> metadatalist;
     
@@ -86,7 +87,7 @@ public class NewJFrame extends javax.swing.JFrame {
      private void init() {
         jList_oldpackage_names.setVisible(false);
         jLabel_added.setVisible(false);
-        jButton_add.setVisible(false);
+//        jButton_add.setVisible(false);
        
         jPopupMenu.add(jPanel1);
         
@@ -184,7 +185,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_selectorg = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox_deploy_retreive = new javax.swing.JComboBox<>();
 
         jList_metadata_types.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -211,6 +212,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Create/ Update Package"));
 
         jButton_add.setText("Add  \nComponents");
+        jButton_add.setEnabled(false);
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_addActionPerformed(evt);
@@ -315,7 +317,15 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jTextField_newpackage_name.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         jButton_backup_packages.setText("BACKUP");
+        jButton_backup_packages.setEnabled(false);
+        jButton_backup_packages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_backup_packagesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_pkg_detailsLayout = new javax.swing.GroupLayout(jPanel_pkg_details);
         jPanel_pkg_details.setLayout(jPanel_pkg_detailsLayout);
@@ -492,7 +502,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Deploy/ Retreive Package"));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deploy", "Retreive" }));
+        jComboBox_deploy_retreive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deploy", "Retreive" }));
+        jComboBox_deploy_retreive.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -500,14 +511,14 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
@@ -591,8 +602,7 @@ public class NewJFrame extends javax.swing.JFrame {
         if(!metadata.equals("")){
             
             jLabel_added.setVisible(false);
-            
-            
+
             defaultListModel.removeAllElements();
             
             for(String m : metadatalist){
@@ -613,7 +623,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jList_oldpackage_names.setVisible(false);
         jTextField_newpackage_name.setVisible(true);
         
-        createDirectoryName = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss").format(new Date());
         
         jTextField_newpackage_name.setText( "package.xml");
         
@@ -644,9 +653,12 @@ public class NewJFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         
-        JOptionPane.showMessageDialog( new JFrame(),"Package has been saved.\nBegin creating new package."); 
+        JOptionPane.showMessageDialog( new JFrame(),jTextField_newpackage_name.getText()+" has been saved.\nBegin creating new package."); 
         
         jButton_preview.setEnabled(false);
+        jButton_save.setEnabled(false);
+        jButton_add.setEnabled(false);
+        jButton_backup_packages.setEnabled(true);
         
         //reset
         metadata_map = new HashMap<>();
@@ -661,10 +673,10 @@ public class NewJFrame extends javax.swing.JFrame {
         
         if(!components.equals("")){
             
-            jButton_add.setVisible(true);
+            jButton_add.setEnabled(true);
                      
         }else{
-            jButton_add.setVisible(false);
+            jButton_add.setEnabled(false);
             
         } 
         
@@ -801,9 +813,38 @@ public class NewJFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         
-        JOptionPane.showMessageDialog(this, SELECTED_ORG_LABEL +" <- credentials have been selected.\nDeployment"
+        jComboBox_deploy_retreive.setEnabled(true);
+        JOptionPane.showMessageDialog(this, SELECTED_ORG_LABEL +" credentials have been selected.\nDeployment"
                 + " and retreival will happen through these. ");
     }//GEN-LAST:event_jButton_selectorgActionPerformed
+
+    private void jButton_backup_packagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backup_packagesActionPerformed
+        // TODO add your handling code here:
+        
+        backupDirectoryName = new SimpleDateFormat("yyyy.MM.dd_HH-mm").format(new Date());
+        String _path = base_path + old_pkg +"\\"+ backupDirectoryName;
+        
+        File file = new File(_path);
+        file.mkdir();
+        
+        File file1 = new File(base_path + retreive);
+        String [] contents = file1.list();
+        
+        try{
+            for(String content : contents){
+                String temp = base_path + retreive + "\\"+ content;
+                Files.move( Paths.get(temp), Paths.get(_path + "\\"+ content));
+                
+            }
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    
+        //joption message show
+        JOptionPane.showMessageDialog(this, "Files have been backed up!!\nFind them in Old_Packages folder by date." );
+        jButton_backup_packages.setEnabled(false);
+        
+    }//GEN-LAST:event_jButton_backup_packagesActionPerformed
     
      
     public static String createPackageString(Map<String, String[]> allcomp){
@@ -879,7 +920,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton_preview;
     private javax.swing.JButton jButton_save;
     private javax.swing.JButton jButton_selectorg;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox_deploy_retreive;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
