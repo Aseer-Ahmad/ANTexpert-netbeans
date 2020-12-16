@@ -88,7 +88,34 @@ public class MdUtility {
                 "#";
     }
     
-    public String build_xml = "";
+    public String build_xml = "<project name=\"Sample usage of Salesforce Ant tasks\" default=\"test\" basedir=\".\" xmlns:sf=\"antlib:com.salesforce\">\n" +
+                "\n" +
+                "    <property file=\"build.properties\"/>\n" +
+                "    <property environment=\"env\"/>\n" +
+                "\n" +
+                "    <!-- Setting default value for username, password and session id properties to empty string \n" +
+                "         so unset values are treated as empty. Without this, ant expressions such as ${sf.username}\n" +
+                "         will be treated literally.\n" +
+                "    -->\n" +
+                "    <condition property=\"sf.username\" value=\"\"> <not> <isset property=\"sf.username\"/> </not> </condition>\n" +
+                "    <condition property=\"sf.password\" value=\"\"> <not> <isset property=\"sf.password\"/> </not> </condition>\n" +
+                "    <condition property=\"sf.sessionId\" value=\"\"> <not> <isset property=\"sf.sessionId\"/> </not> </condition>\n" +
+                "\n" +
+                "    <taskdef resource=\"com/salesforce/antlib.xml\" uri=\"antlib:com.salesforce\">\n" +
+                "        <classpath>\n" +
+                "            <pathelement location=\"../ant-salesforce.jar\" />        	\n" +
+                "        </classpath>\n" +
+                "    </taskdef>\n" +
+                "    <target name=\"deploy\">\n" +
+                "      <sf:deploy username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\"\n" +
+                "      maxPoll=\"${sf.maxPoll}\" deployRoot=\"retreivedSource\" checkOnly=\"true\" rollbackOnError=\"true\"/>\n" +
+                "    </target>\n"+
+                "\n"+
+                "<!-- Retrieve metadata for all the packages specified under packageNames -->\n" +
+                "    <target name=\"retreive\">\n" +
+                "      <sf:retrieve username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\" " +
+                "maxPoll=\"${sf.maxPoll}\" retrieveTarget=\"retrieveOutput\" packageNames=\"${sf.pkgName}\"/>\n" +
+                "    </target>";
     
     public String metadata_list = "AccountSettings\n" +
                             "ActionOverride\n" +

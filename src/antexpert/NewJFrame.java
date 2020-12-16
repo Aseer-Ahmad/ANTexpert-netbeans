@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -50,6 +53,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public String components = "";
     public DefaultListModel<String> defaultListModel;
     public DefaultListModel<String> defaultListModel_orglabels;
+    public DefaultListModel<String> defaultListModel_createdPackagenames;
     
     public String backupDirectoryName = "";
     
@@ -62,7 +66,6 @@ public class NewJFrame extends javax.swing.JFrame {
     public static final String version = "<version>" + VERSION + "</version>\n";
     public static final String tail = "</Package>\n";
     
-    public static final String base_path = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     
     //Package members
     public static String packageString = "";
@@ -70,6 +73,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public Map<String, MdUtility> org_map;
     
     //folder maps
+    public static final String base_path = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
     String retreive = "\\Ant\\retreive";
     String old_pkg = "\\Ant\\old_packages";
     String config = "\\Ant\\config";
@@ -85,7 +89,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     
      private void init() {
-        jList_oldpackage_names.setVisible(false);
+        jList_createdpackage_names.setVisible(false);
         jLabel_added.setVisible(false);
 //        jButton_add.setVisible(false);
        
@@ -93,12 +97,10 @@ public class NewJFrame extends javax.swing.JFrame {
         
         metadata_map = new HashMap<String, String[]>();
         org_map = new HashMap<String, MdUtility>();
-        
-        jTextField_newpackage_name.setText( "package.xml");
-        
-        
+   
         MdUtility mdUtility = new MdUtility();
         metadatalist = Arrays.asList( mdUtility.metadata_list.split("\n"));
+     
         
         defaultListModel = new DefaultListModel<>();
         jList_metadata_types.setModel(defaultListModel);
@@ -106,8 +108,12 @@ public class NewJFrame extends javax.swing.JFrame {
         defaultListModel_orglabels = new DefaultListModel<>();
         jList_orgLabels.setModel(defaultListModel_orglabels);
         
+        defaultListModel_createdPackagenames  = new DefaultListModel<>();
+        jList_createdpackage_names.setModel(defaultListModel_createdPackagenames);
+        
         createFolderMap();
-          
+        
+     
     }
      
      private void createFolderMap(){
@@ -116,12 +122,17 @@ public class NewJFrame extends javax.swing.JFrame {
          File file = new File(base_path+retreive);
          if(  !file.isDirectory()){
              file.mkdirs();
+         }else{
+             //populate list  created package names
+             String [] names = file.list();
+             for(String name: names)
+                 defaultListModel_createdPackagenames.addElement(name);
          }
          
          file = new File(base_path+old_pkg);
          if(  !file.isDirectory()){
              file.mkdirs();
-         }
+            }
          
          try{
             file = new File(base_path+config);
@@ -132,9 +143,12 @@ public class NewJFrame extends javax.swing.JFrame {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 while ((line = br.readLine()) != null) {
                     String[] arr = line.split("\t");
-                    defaultListModel_orglabels.addElement(arr[0]);
-                    org_map.put( arr[0], new MdUtility(arr[0], arr[1], arr[2], arr[3], arr[4]));
-                } 
+                    if( !org_map.containsKey(arr[0])){
+                        org_map.put( arr[0], new MdUtility(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                        defaultListModel_orglabels.addElement(arr[0]);
+                    }
+                }
+                br.close();
             }
          }catch(IOException ex){
              ex.printStackTrace();
@@ -165,14 +179,14 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_save = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList_oldpackage_names = new javax.swing.JList<>();
+        jList_createdpackage_names = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_components = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jTextField_metadata = new javax.swing.JTextField();
-        jTextField_newpackage_name = new javax.swing.JTextField();
         jButton_backup_packages = new javax.swing.JButton();
+        jComboBox_pkgName = new javax.swing.JComboBox<>();
         jPanel3_org_details = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -184,6 +198,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_addOrg = new javax.swing.JButton();
         jButton_selectorg = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton_removeOrg = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jComboBox_deploy_retreive = new javax.swing.JComboBox<>();
 
@@ -211,7 +226,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Create/ Update Package"));
 
-        jButton_add.setText("Add  \nComponents");
+        jButton_add.setText("Add   Components");
         jButton_add.setEnabled(false);
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +234,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton_preview.setText("Preview Components");
+        jButton_preview.setText("Preview current Package");
         jButton_preview.setEnabled(false);
         jButton_preview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,11 +244,12 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel_added.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel_added.setForeground(new java.awt.Color(24, 219, 23));
-        jLabel_added.setText("Added");
+        jLabel_added.setText("Added Components to Package. ");
 
         buttonGroup_pkgaction.add(jRadioButton1);
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("create");
+        jRadioButton1.setToolTipText("");
         jRadioButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,21 +273,27 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jList_oldpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder("select package to update"));
-        jList_oldpackage_names.setToolTipText("");
-        jScrollPane3.setViewportView(jList_oldpackage_names);
+        jList_createdpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder("select package to update"));
+        jList_createdpackage_names.setToolTipText("");
+        jList_createdpackage_names.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_createdpackage_namesMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jList_createdpackage_names);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Enter Components"));
@@ -289,11 +311,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("select metadata"));
@@ -317,13 +339,18 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTextField_newpackage_name.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
         jButton_backup_packages.setText("BACKUP");
         jButton_backup_packages.setEnabled(false);
         jButton_backup_packages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_backup_packagesActionPerformed(evt);
+            }
+        });
+
+        jComboBox_pkgName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "package", "destructiveChanges", "destructiveChangesPost", "destructiveChangesPre" }));
+        jComboBox_pkgName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_pkgNameActionPerformed(evt);
             }
         });
 
@@ -341,65 +368,67 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel_added))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField_newpackage_name, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel_added))
+                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addComponent(jButton_add, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton_backup_packages))
+                        .addComponent(jButton_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_preview))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton_preview)))
+                        .addComponent(jButton_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_backup_packages)))
                 .addGap(25, 25, 25))
-            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                .addGap(571, 571, 571)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
         );
         jPanel_pkg_detailsLayout.setVerticalGroup(
             jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
+            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jTextField_newpackage_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_add)
-                            .addComponent(jButton_backup_packages))))
-                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                            .addComponent(jButton_backup_packages))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_save)
                             .addComponent(jButton_preview))
+                        .addGap(11, 11, 11))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jLabel_added)))
+                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel_added)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Organization "));
@@ -418,13 +447,15 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel7.setText("sf.serverurl");
 
         jLabel_urltype.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_urltype.setText("server url name");
+        jLabel_urltype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_urltype.setText("-");
 
         jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
         jLabel_maxpoll.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_maxpoll.setText("maxpoll");
+        jLabel_maxpoll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_maxpoll.setText("-");
 
         jButton_addOrg.setText("Add New Org Cred.");
         jButton_addOrg.addActionListener(new java.awt.event.ActionListener() {
@@ -443,6 +474,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jButton_removeOrg.setText("Remove Selected Org.");
+        jButton_removeOrg.setEnabled(false);
+        jButton_removeOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_removeOrgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3_org_detailsLayout = new javax.swing.GroupLayout(jPanel3_org_details);
         jPanel3_org_details.setLayout(jPanel3_org_detailsLayout);
         jPanel3_org_detailsLayout.setHorizontalGroup(
@@ -450,10 +489,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton_addOrg))
+                    .addComponent(jLabel6)
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
@@ -465,11 +501,14 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(13, 13, 13)
-                                .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel_maxpoll)))
-                            .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel_maxpoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton_addOrg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_removeOrg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3_org_detailsLayout.setVerticalGroup(
@@ -496,7 +535,10 @@ public class NewJFrame extends javax.swing.JFrame {
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton_selectorg))))
-                    .addComponent(jButton_addOrg))
+                    .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
+                        .addComponent(jButton_addOrg)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_removeOrg)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -511,7 +553,7 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -553,13 +595,23 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         components = jTextArea_components.getText().toString();
         
-        String [] arr = formatComponents(components);
-        metadata_map.put( jTextField_metadata.getText().toString() , arr);      
+        if( !jTextField_metadata.getText().isEmpty() ){
+            String [] arr = formatComponents(components);
+            metadata_map.put( jTextField_metadata.getText().toString() , arr);      
+
+            //label appear
+            jLabel_added.setVisible(true);
+            
+            //clear text fields and area
+             jTextArea_components.setText("");
+            jTextField_metadata.setText("");
         
-        jLabel_added.setVisible(true);
-        
-        jButton_save.setEnabled(true);
-        jButton_preview.setEnabled(true);
+            //button enable 
+            jButton_save.setEnabled(true);
+            jButton_preview.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Metadata type not selected!\nSelect one to make package.");
+        }
     }//GEN-LAST:event_jButton_addActionPerformed
 
     public static String[] formatComponents(String cmp){
@@ -620,18 +672,29 @@ public class NewJFrame extends javax.swing.JFrame {
     
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-        jList_oldpackage_names.setVisible(false);
-        jTextField_newpackage_name.setVisible(true);
+        jList_createdpackage_names.setVisible(false);
+        jComboBox_pkgName.setVisible(true);
         
-        
-        jTextField_newpackage_name.setText( "package.xml");
-        
+                
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
-        jTextField_newpackage_name.setVisible(false);
-        jList_oldpackage_names.setVisible(true);
+        jComboBox_pkgName.setVisible(false);
+        jList_createdpackage_names.setVisible(true);
+        
+        
+        jLabel_added.setVisible(false);
+        jButton_add.setEnabled(false);
+        jButton_preview.setEnabled(false);
+        jButton_save.setEnabled(false);
+        jButton_backup_packages.setEnabled(false);
+        
+        //reset
+        metadata_map = new HashMap<>();
+        jTextArea_components.setText("");
+        jTextField_metadata.setText("");
+        
 
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
@@ -646,24 +709,28 @@ public class NewJFrame extends javax.swing.JFrame {
         
         // save to directory
         try{
-            BufferedWriter bf = new BufferedWriter( new FileWriter(new File(base_path + retreive +"\\" + jTextField_newpackage_name.getText() )));
+            BufferedWriter bf = new BufferedWriter( new FileWriter(new File(base_path + retreive +"\\" + jComboBox_pkgName.getSelectedItem()+".xml" )));
             bf.write(packageString);
             bf.close();
+
+            defaultListModel_createdPackagenames.addElement(jComboBox_pkgName.getSelectedItem().toString()+".xml");
+
         }catch(IOException ex){
             ex.printStackTrace();
         }
-        
-        JOptionPane.showMessageDialog( new JFrame(),jTextField_newpackage_name.getText()+" has been saved.\nBegin creating new package."); 
-        
+
+        JOptionPane.showMessageDialog( new JFrame(),jComboBox_pkgName.getSelectedItem()+" has been saved.\nBegin creating new package."); 
+
         jButton_preview.setEnabled(false);
         jButton_save.setEnabled(false);
         jButton_add.setEnabled(false);
         jButton_backup_packages.setEnabled(true);
-        
+
         //reset
         metadata_map = new HashMap<>();
         jTextArea_components.setText("");
         jTextField_metadata.setText("");
+        
         
     }//GEN-LAST:event_jButton_saveActionPerformed
 
@@ -671,7 +738,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         components = jTextArea_components.getText().toString();
         
-        if(!components.equals("")){
+        if(!components.equals("") && jRadioButton1.isSelected()){
             
             jButton_add.setEnabled(true);
                      
@@ -795,7 +862,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_urltype.setText( mdUtility.getOrg_type());
         jLabel_maxpoll.setText( mdUtility.getMaxpoll());
         
+        //enable buttons
         jButton_selectorg.setEnabled(true);
+        jButton_removeOrg.setEnabled(true);
     }//GEN-LAST:event_jList_orgLabelsMouseClicked
 
     private void jButton_selectorgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_selectorgActionPerformed
@@ -834,17 +903,128 @@ public class NewJFrame extends javax.swing.JFrame {
             for(String content : contents){
                 String temp = base_path + retreive + "\\"+ content;
                 Files.move( Paths.get(temp), Paths.get(_path + "\\"+ content));
-                
             }
         }catch(IOException ex){
             ex.printStackTrace();
         }
     
-        //joption message show
+        defaultListModel_createdPackagenames.removeAllElements();
+        
+        //joption message shows
         JOptionPane.showMessageDialog(this, "Files have been backed up!!\nFind them in Old_Packages folder by date." );
         jButton_backup_packages.setEnabled(false);
         
     }//GEN-LAST:event_jButton_backup_packagesActionPerformed
+
+    private void jComboBox_pkgNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_pkgNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_pkgNameActionPerformed
+
+    private void jList_createdpackage_namesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_createdpackage_namesMouseClicked
+        // TODO add your handling code here:
+        
+        String file_name = jList_createdpackage_names.getSelectedValue();
+        StringBuilder sb = new StringBuilder();
+        String abs_path_file = base_path+retreive+"\\"+file_name;
+        File file = new File(abs_path_file);
+        
+        try{
+            String line;
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while((line = br.readLine())!=null ){
+                sb.append(line+"\n");
+            } 
+            br.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+        
+        
+        JTextArea textArea = new JTextArea(sb.toString());
+        JScrollPane scrollPane = new JScrollPane(textArea);  
+        textArea.setLineWrap(true);  
+        textArea.setWrapStyleWord(true); 
+        scrollPane.setPreferredSize( new Dimension( 500, 500 ) );
+        Object[] options = {"Click to save the changes!","Delete", "Cancel"};
+        int temp = JOptionPane.showOptionDialog(null, scrollPane, "Edit component",  
+                                               JOptionPane.YES_NO_CANCEL_OPTION,
+                                               JOptionPane.WARNING_MESSAGE,
+                                               null,
+                                               options,
+                                               options[0]);
+        
+        if(temp == JOptionPane.YES_OPTION){
+            //save edited 
+            String edited = textArea.getText();
+            BufferedWriter br;
+            try {
+                br = new BufferedWriter(new FileWriter(file));
+                br.write(edited);
+                br.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+            JOptionPane.showMessageDialog(this, file_name+" ; Changes have been saved!");
+            
+        }else if(temp == JOptionPane.NO_OPTION){
+            //delete
+             if(file.delete()) 
+                System.out.println("File deleted successfully"); 
+            else
+                System.out.println("Failed to delete the file"); 
+            //update packagelist
+            defaultListModel_createdPackagenames.removeElement(file_name);
+            //show confirm dialog
+            JOptionPane.showMessageDialog(this, file_name+" has been deleted!");
+        }
+        
+    }//GEN-LAST:event_jList_createdpackage_namesMouseClicked
+
+    private void jButton_removeOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_removeOrgActionPerformed
+        // TODO add your handling code here:
+        String org_label = jList_orgLabels.getSelectedValue().toString();
+        
+        int temp = JOptionPane.showConfirmDialog(this, "Delete "+ org_label+" credentials?");
+
+        if(temp == JOptionPane.YES_OPTION){
+            //remove from map and list model
+            org_map.remove(org_label);
+            defaultListModel_orglabels.removeElement(org_label);
+            
+            //write to config
+            File file = new File(base_path+config);
+            try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            for(Map.Entry<String, MdUtility> entry : org_map.entrySet()){
+                MdUtility mdUtility = entry.getValue();
+                
+                //label username password maxpoll tg
+                bw.write( mdUtility.getLabel()+"\t"+mdUtility.getUsername()+"\t"+mdUtility.getPassword()
+                        +"\t"+mdUtility.getMaxpoll()+"\t"+mdUtility.getOrg_type()+"\n");
+                
+            }
+            bw.close();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+         
+            jList_orgLabels.clearSelection();
+            
+            //delete build
+            new File(base_path+build_prop).delete();
+            
+            //set labels to blank
+            jLabel_maxpoll.setText("-");
+            jLabel_urltype.setText("-");
+            
+            //disable buttons
+            jButton_selectorg.setEnabled(false);
+            jButton_removeOrg.setEnabled(false);
+            
+        }
+        
+    }//GEN-LAST:event_jButton_removeOrgActionPerformed
     
      
     public static String createPackageString(Map<String, String[]> allcomp){
@@ -918,17 +1098,19 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton_addOrg;
     private javax.swing.JButton jButton_backup_packages;
     private javax.swing.JButton jButton_preview;
+    private javax.swing.JButton jButton_removeOrg;
     private javax.swing.JButton jButton_save;
     private javax.swing.JButton jButton_selectorg;
     private javax.swing.JComboBox<String> jComboBox_deploy_retreive;
+    private javax.swing.JComboBox<String> jComboBox_pkgName;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_added;
     private javax.swing.JLabel jLabel_maxpoll;
     private javax.swing.JLabel jLabel_urltype;
+    private javax.swing.JList<String> jList_createdpackage_names;
     private javax.swing.JList<String> jList_metadata_types;
-    private javax.swing.JList<String> jList_oldpackage_names;
     private javax.swing.JList<String> jList_orgLabels;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -947,7 +1129,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea_components;
     private javax.swing.JTextField jTextField_metadata;
-    private javax.swing.JTextField jTextField_newpackage_name;
     // End of variables declaration//GEN-END:variables
 
    
