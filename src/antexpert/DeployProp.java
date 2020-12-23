@@ -5,18 +5,40 @@
  */
 package antexpert;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author aseer
  */
 public class DeployProp {
     
-    public static String tasktype;
-    public static String isCheck;
-    public static String isRollback;
+    public static final int CHECK = 1;
+    public static final int ROLLBACK = 2;
     
+    public static String isCheck = "checkOnly=\"true\"";
+    public static String isRollback = "rollbackOnError=\"true\"";
     
-    public static String build_xml = "<project name=\"Sample usage of Salesforce Ant tasks\" default=\"test\" basedir=\".\" xmlns:sf=\"antlib:com.salesforce\">\n" +
+    public static Map<Integer, String> map = new HashMap<Integer, String>(){{
+                                                                            put(CHECK, isCheck);
+                                                                            put(ROLLBACK, isRollback);                                                                    
+    }};
+        
+    
+    public static String getDeployBuildString( ArrayList<Integer> list){
+        
+        StringBuilder sb = new StringBuilder();
+        for(Integer i : list){
+            sb.append( map.get(i)+" ");
+        }
+        
+//        turn map<String, String> to map with list to get specified tests too
+//        if(map.containsKey(sb)){
+//            
+//        }
+        return "<project name=\"Sample usage of Salesforce Ant tasks\" default=\"test\" basedir=\".\" xmlns:sf=\"antlib:com.salesforce\">\n" +
             "\n" +
             "    <property file=\"build.properties\"/>\n" +
             "    <property environment=\"env\"/>\n" +
@@ -59,20 +81,23 @@ public class DeployProp {
             "    <target name=\"deploy\">\n" +
             "      <!-- Upload the contents of the \"retrievedSource\" directory-->\n" +
             "      <sf:deploy username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\"\n" +
-            "	 maxPoll=\"${sf.maxPoll}\" deployRoot=\"retreivedSource\" rollbackOnError=\"true\">\n" +
+            "	 maxPoll=\"${sf.maxPoll}\" deployRoot=\"retreivedSource\" "+  sb.toString() +"  >\n" +
             "      </sf:deploy>\n" +
             "    </target>\n" +
             "	\n" +
             "\n" +
-            "	<!-- Shows deploying code and running tests only within the org namespace -->\n" +
-            "	<target name=\"deployCodeRunLocalTests\">\n" +
-            "	  <sf:deploy username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\"\n" +
-            "	  maxPoll=\"${sf.maxPoll}\" checkOnly=\"true\" deployRoot=\"retreivedSource\" rollbackOnError=\"true\"  testlevel=\"RunLocalTests\"/>\n" +
-            "	</target>\n" +
             "	\n" +
             "   \n" +
             "\n" +
             "\n" +
             "</project>";
+            }
+            
+//            public static String getDeployBuild(){
+//                
+//            }
+    
+    
+    
     
 }
