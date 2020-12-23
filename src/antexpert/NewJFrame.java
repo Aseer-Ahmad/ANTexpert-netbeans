@@ -42,7 +42,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author cepheus
+ * @author aseer
  */
 public class NewJFrame extends javax.swing.JFrame {
 
@@ -187,6 +187,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextField_metadata = new javax.swing.JTextField();
         jButton_backup_packages = new javax.swing.JButton();
         jComboBox_pkgName = new javax.swing.JComboBox<>();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3_org_details = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -293,7 +294,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Enter Components"));
@@ -311,7 +312,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,21 +369,18 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel_added))
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
                         .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                                .addComponent(jLabel_added)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addComponent(jButton_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -398,7 +396,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel_pkg_detailsLayout.setVerticalGroup(
             jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,8 +413,9 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2)
                             .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(jLabel_added)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel_added)
+                        .addGap(6, 6, 6)))
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -425,9 +424,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -439,6 +436,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jList_orgLabels.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jList_orgLabelsMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jList_orgLabelsMouseReleased(evt);
             }
         });
         jScrollPane4.setViewportView(jList_orgLabels);
@@ -542,6 +542,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTabbedPane1.addTab("Select Organization", jPanel3_org_details);
+
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Deploy/ Retreive Package"));
 
         jComboBox_deploy_retreive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deploy", "Retreive" }));
@@ -561,8 +563,10 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
+
+        jTabbedPane1.addTab("Deploy/Retreive", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -571,20 +575,17 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3_org_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3_org_details, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -858,13 +859,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jList_orgLabelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_orgLabelsMouseClicked
         // TODO add your handling code here:
-        MdUtility mdUtility = org_map.get( jList_orgLabels.getSelectedValue() );
-        jLabel_urltype.setText( mdUtility.getOrg_type());
-        jLabel_maxpoll.setText( mdUtility.getMaxpoll());
         
-        //enable buttons
-        jButton_selectorg.setEnabled(true);
-        jButton_removeOrg.setEnabled(true);
     }//GEN-LAST:event_jList_orgLabelsMouseClicked
 
     private void jButton_selectorgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_selectorgActionPerformed
@@ -923,60 +918,61 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jList_createdpackage_namesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_createdpackage_namesMouseClicked
         // TODO add your handling code here:
         
-        String file_name = jList_createdpackage_names.getSelectedValue();
-        StringBuilder sb = new StringBuilder();
-        String abs_path_file = base_path+retreive+"\\"+file_name;
-        File file = new File(abs_path_file);
-        
-        try{
-            String line;
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            while((line = br.readLine())!=null ){
-                sb.append(line+"\n");
-            } 
-            br.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        
-        
-        
-        JTextArea textArea = new JTextArea(sb.toString());
-        JScrollPane scrollPane = new JScrollPane(textArea);  
-        textArea.setLineWrap(true);  
-        textArea.setWrapStyleWord(true); 
-        scrollPane.setPreferredSize( new Dimension( 500, 500 ) );
-        Object[] options = {"Click to save the changes!","Delete", "Cancel"};
-        int temp = JOptionPane.showOptionDialog(null, scrollPane, "Edit component",  
-                                               JOptionPane.YES_NO_CANCEL_OPTION,
-                                               JOptionPane.WARNING_MESSAGE,
-                                               null,
-                                               options,
-                                               options[0]);
-        
-        if(temp == JOptionPane.YES_OPTION){
-            //save edited 
-            String edited = textArea.getText();
-            BufferedWriter br;
-            try {
-                br = new BufferedWriter(new FileWriter(file));
-                br.write(edited);
+        if( !defaultListModel_createdPackagenames.isEmpty()){
+            String file_name = jList_createdpackage_names.getSelectedValue();
+            StringBuilder sb = new StringBuilder();
+            String abs_path_file = base_path+retreive+"\\"+file_name;
+            File file = new File(abs_path_file);
+
+            try{
+                String line;
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                while((line = br.readLine())!=null ){
+                    sb.append(line+"\n");
+                } 
                 br.close();
-            } catch (IOException ex) {
-                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            JOptionPane.showMessageDialog(this, file_name+" ; Changes have been saved!");
-            
-        }else if(temp == JOptionPane.NO_OPTION){
-            //delete
-             if(file.delete()) 
-                System.out.println("File deleted successfully"); 
-            else
-                System.out.println("Failed to delete the file"); 
-            //update packagelist
-            defaultListModel_createdPackagenames.removeElement(file_name);
-            //show confirm dialog
-            JOptionPane.showMessageDialog(this, file_name+" has been deleted!");
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+
+            JTextArea textArea = new JTextArea(sb.toString());
+            JScrollPane scrollPane = new JScrollPane(textArea);  
+            textArea.setLineWrap(true);  
+            textArea.setWrapStyleWord(true); 
+            scrollPane.setPreferredSize( new Dimension( 500, 500 ) );
+            Object[] options = {"Click to save the changes!","Delete", "Cancel"};
+            int temp = JOptionPane.showOptionDialog(null, scrollPane, "Edit component",  
+                                                   JOptionPane.YES_NO_CANCEL_OPTION,
+                                                   JOptionPane.WARNING_MESSAGE,
+                                                   null,
+                                                   options,
+                                                   options[0]);
+
+            if(temp == JOptionPane.YES_OPTION){
+                //save edited 
+                String edited = textArea.getText();
+                BufferedWriter br;
+                try {
+                    br = new BufferedWriter(new FileWriter(file));
+                    br.write(edited);
+                    br.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                JOptionPane.showMessageDialog(this, file_name+" ; Changes have been saved!");
+
+            }else if(temp == JOptionPane.NO_OPTION){
+                //delete
+                 if(file.delete()) 
+                    System.out.println("File deleted successfully"); 
+                else
+                    System.out.println("Failed to delete the file"); 
+                //update packagelist
+                defaultListModel_createdPackagenames.removeElement(file_name);
+                //show confirm dialog
+                JOptionPane.showMessageDialog(this, file_name+" has been deleted!");
+            }
+
         }
         
     }//GEN-LAST:event_jList_createdpackage_namesMouseClicked
@@ -1025,6 +1021,20 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton_removeOrgActionPerformed
+
+    private void jList_orgLabelsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_orgLabelsMouseReleased
+        // TODO add your handling code here:
+        
+        if( !defaultListModel_orglabels.isEmpty()){
+            MdUtility mdUtility = org_map.get( jList_orgLabels.getSelectedValue() );
+            jLabel_urltype.setText( mdUtility.getOrg_type());
+            jLabel_maxpoll.setText( mdUtility.getMaxpoll());
+
+            //enable buttons
+            jButton_selectorg.setEnabled(true);
+            jButton_removeOrg.setEnabled(true);
+        }
+    }//GEN-LAST:event_jList_orgLabelsMouseReleased
     
      
     public static String createPackageString(Map<String, String[]> allcomp){
@@ -1127,6 +1137,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea_components;
     private javax.swing.JTextField jTextField_metadata;
     // End of variables declaration//GEN-END:variables
