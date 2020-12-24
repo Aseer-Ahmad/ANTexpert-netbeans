@@ -17,27 +17,35 @@ public class DeployProp {
     
     public static final int CHECK = 1;
     public static final int ROLLBACK = 2;
+    public static final int TESTSPECIFIC = 3;
+    public static final int TESTLOCAL = 4;
+    
     
     public static String isCheck = "checkOnly=\"true\"";
     public static String isRollback = "rollbackOnError=\"true\"";
+    public static String istestlevelSpecific = "testLevel=\"RunSpecifiedTests\"";
+    public static String specifictests = "";
+    public static String istestlevelLocal = "testlevel=\"RunLocalTests\"";
     
     public static Map<Integer, String> map = new HashMap<Integer, String>(){{
                                                                             put(CHECK, isCheck);
-                                                                            put(ROLLBACK, isRollback);                                                                    
+                                                                            put(ROLLBACK, isRollback);
+                                                                            put(TESTSPECIFIC, istestlevelSpecific);
+                                                                            put(TESTLOCAL, istestlevelLocal);
+                                                                            
     }};
         
-    
+    public void setSpecificTests(String specifictests){ //build string in main method
+        this.specifictests = specifictests;
+    }
+ 
     public static String getDeployBuildString( ArrayList<Integer> list){
         
         StringBuilder sb = new StringBuilder();
         for(Integer i : list){
             sb.append( map.get(i)+" ");
         }
-        
-//        turn map<String, String> to map with list to get specified tests too
-//        if(map.containsKey(sb)){
-//            
-//        }
+       
         return "<project name=\"Sample usage of Salesforce Ant tasks\" default=\"test\" basedir=\".\" xmlns:sf=\"antlib:com.salesforce\">\n" +
             "\n" +
             "    <property file=\"build.properties\"/>\n" +
@@ -58,7 +66,6 @@ public class DeployProp {
             "    </taskdef>\n" +
             "	\n" +
             "   \n" +
-            "    <!-- Shows retrieving code; only succeeds if done after deployCode -->\n" +
             "    <target name=\"retreive\">\n" +
             "      <mkdir dir=\"retreivedSource\"/>\n" +
             "      <!-- Retrieve the contents listed in the file codepkg/package.xml into the codepkg directory -->\n" +
@@ -66,22 +73,10 @@ public class DeployProp {
             "   serverurl=\"${sf.serverurl}\" maxPoll=\"${sf.maxPoll}\" retrieveTarget=\"retreivedSource\" unpackaged=\"retreive/package.xml\"/>\n" +
             "    </target>\n" +
             "	\n" +
-            "    <!-- Shows deploying code & running tests for code in directory -->\n" +
-            "    <target name=\"deployCheckSpecific\">\n" +
-            "      <!-- Upload the contents of the \"codepkg\" directory, running the tests for just 1 class -->\n" +
-            "      <sf:deploy username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\"\n" +
-            " maxPoll=\"${sf.maxPoll}\" checkOnly=\"true\" deployRoot=\"retreivedSource\" testLevel=\"RunSpecifiedTests\" rollbackOnError=\"true\">\n" +
-            " \n" +
-            "	<runTest>VST_RosesControllerTest</runTest> \n" +
-            "	\n" +
-            "      </sf:deploy>\n" +
-            "    </target>\n" +
-            "\n" +
-            "    <!--Shows deploying code with no TestLevel sepcified-->\n" +
             "    <target name=\"deploy\">\n" +
-            "      <!-- Upload the contents of the \"retrievedSource\" directory-->\n" +
             "      <sf:deploy username=\"${sf.username}\" password=\"${sf.password}\" sessionId=\"${sf.sessionId}\" serverurl=\"${sf.serverurl}\"\n" +
             "	 maxPoll=\"${sf.maxPoll}\" deployRoot=\"retreivedSource\" "+  sb.toString() +"  >\n" +
+                    specifictests +
             "      </sf:deploy>\n" +
             "    </target>\n" +
             "	\n" +
@@ -93,7 +88,8 @@ public class DeployProp {
             "</project>";
             }
             
-//            public static String getDeployBuild(){
+            
+//            public static String getRetreiveBuildString(){
 //                
 //            }
     

@@ -75,12 +75,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTabbedPane1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jTabbedPane1" alignment="1" pref="1035" max="32767" attributes="0"/>
                   <Component id="jPanel_pkg_details" alignment="1" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -238,9 +239,9 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup_pkgaction"/>
             </Property>
+            <Property name="mnemonic" type="int" value="32"/>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="create"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="horizontalTextPosition" type="int" value="2"/>
           </Properties>
           <Events>
@@ -473,7 +474,7 @@
                                   </Group>
                                   <Component id="jButton_selectorg" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="35" max="32767" attributes="0"/>
+                              <EmptySpace pref="12" max="32767" attributes="0"/>
                               <Component id="jLabel_selectedOrg" min="-2" pref="350" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
                           </Group>
@@ -658,16 +659,35 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jComboBox_deploy_retreive" min="-2" pref="164" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jCheckBox_packageNames" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_testlevelLocal" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_checkonly" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_rollbackonerror" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox_testLevel_specific" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="657" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBox_deploy_retreive" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jCheckBox_rollbackonerror" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox_deploy_retreive" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBox_checkonly" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBox_testlevelLocal" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBox_packageNames" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jCheckBox_testLevel_specific" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="50" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -686,6 +706,31 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_rollbackonerror">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="rollbackonError"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_checkonly">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="checkOnly"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_testlevelLocal">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="testLevel-local"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_packageNames">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="packageNames"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_testLevel_specific">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="testLevel-specific"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

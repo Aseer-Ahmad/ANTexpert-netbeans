@@ -59,7 +59,7 @@ public class NewJFrame extends javax.swing.JFrame {
     
     public List<String> metadatalist;
     
-    public static String SELECTED_ORG_LABEL;
+    public static String SELECTED_ORG_LABEL = "";
     public static final String newChangeLineComment = "<!--new changes here-->\n";
     public static float VERSION = 41.0f;
     public static final String head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Package xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n";
@@ -203,6 +203,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_selectedOrg = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jComboBox_deploy_retreive = new javax.swing.JComboBox<>();
+        jCheckBox_rollbackonerror = new javax.swing.JCheckBox();
+        jCheckBox_checkonly = new javax.swing.JCheckBox();
+        jCheckBox_testlevelLocal = new javax.swing.JCheckBox();
+        jCheckBox_packageNames = new javax.swing.JCheckBox();
+        jCheckBox_testLevel_specific = new javax.swing.JCheckBox();
 
         jList_metadata_types.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -249,9 +254,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_added.setText("Added Components to Package. ");
 
         buttonGroup_pkgaction.add(jRadioButton1);
+        jRadioButton1.setMnemonic(' ');
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("create");
-        jRadioButton1.setToolTipText("");
         jRadioButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,7 +521,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel_maxpoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(205, 205, 205))))
         );
@@ -560,6 +565,16 @@ public class NewJFrame extends javax.swing.JFrame {
         jComboBox_deploy_retreive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deploy", "Retreive" }));
         jComboBox_deploy_retreive.setEnabled(false);
 
+        jCheckBox_rollbackonerror.setText("rollbackonError");
+
+        jCheckBox_checkonly.setText("checkOnly");
+
+        jCheckBox_testlevelLocal.setText("testLevel-local");
+
+        jCheckBox_packageNames.setText("packageNames");
+
+        jCheckBox_testLevel_specific.setText("testLevel-specific");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -567,14 +582,31 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox_packageNames)
+                    .addComponent(jCheckBox_testlevelLocal)
+                    .addComponent(jCheckBox_checkonly)
+                    .addComponent(jCheckBox_rollbackonerror)
+                    .addComponent(jCheckBox_testLevel_specific))
+                .addContainerGap(657, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox_rollbackonerror)
+                    .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox_checkonly)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox_testlevelLocal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox_packageNames)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox_testLevel_specific)
+                .addGap(0, 50, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Deploy/Retreive", jPanel2);
@@ -583,11 +615,12 @@ public class NewJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE)
+                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1024,6 +1057,9 @@ public class NewJFrame extends javax.swing.JFrame {
             jButton_selectorg.setEnabled(false);
             jButton_removeOrg.setEnabled(false);
             
+            //disable combo box deploy retreive
+            jComboBox_deploy_retreive.setEnabled(false);
+            
         }
         
     }//GEN-LAST:event_jButton_removeOrgActionPerformed
@@ -1122,6 +1158,11 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton_removeOrg;
     private javax.swing.JButton jButton_save;
     private javax.swing.JButton jButton_selectorg;
+    private javax.swing.JCheckBox jCheckBox_checkonly;
+    private javax.swing.JCheckBox jCheckBox_packageNames;
+    private javax.swing.JCheckBox jCheckBox_rollbackonerror;
+    private javax.swing.JCheckBox jCheckBox_testLevel_specific;
+    private javax.swing.JCheckBox jCheckBox_testlevelLocal;
     private javax.swing.JComboBox<String> jComboBox_deploy_retreive;
     private javax.swing.JComboBox<String> jComboBox_pkgName;
     private javax.swing.JLabel jLabel6;
