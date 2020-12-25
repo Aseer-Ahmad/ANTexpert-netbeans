@@ -687,7 +687,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         components = jTextArea_components.getText().toString();
         
-        if( !jTextField_metadata.getText().isEmpty() ){
+        if( !jTextField_metadata.getText().isEmpty() && !jTextArea_components.getText().isEmpty()  ){
             String [] arr = formatComponents(components);
             metadata_map.put( jTextField_metadata.getText().toString() , arr);      
 
@@ -701,8 +701,11 @@ public class NewJFrame extends javax.swing.JFrame {
             //button enable 
             jButton_save.setEnabled(true);
             jButton_preview.setEnabled(true);
+            
+            //button disable
+            jButton_add.setEnabled(false);
         }else{
-            JOptionPane.showMessageDialog(this, "Metadata type not selected!\nSelect one to make package.");
+            JOptionPane.showMessageDialog(this, "Metadata or components is Empty!!\nAdd components to a metadata type to continue.");
         }
     }//GEN-LAST:event_jButton_addActionPerformed
 
@@ -779,21 +782,40 @@ public class NewJFrame extends javax.swing.JFrame {
     
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
-        jComboBox_pkgName.setVisible(false);
-        jList_createdpackage_names.setVisible(true);
-        
-        
-        jLabel_added.setVisible(false);
-        jButton_add.setEnabled(false);
-        jButton_preview.setEnabled(false);
-        jButton_save.setEnabled(false);
-        //jButton_backup_packages.setEnabled(false);
-        
-        //reset
-        metadata_map = new HashMap<>();
-        jTextArea_components.setText("");
-        jTextField_metadata.setText("");
-        
+ 
+        if( metadata_map.isEmpty()){
+            jComboBox_pkgName.setVisible(false);
+            jList_createdpackage_names.setVisible(true);
+
+            jLabel_added.setVisible(false);
+            jButton_add.setEnabled(false);
+            jButton_preview.setEnabled(false);
+            jButton_save.setEnabled(false);
+
+            //reset
+            metadata_map = new HashMap<>();
+            jTextArea_components.setText("");
+            jTextField_metadata.setText("");
+        }else{
+            int temp = JOptionPane.showConfirmDialog(this, "You have a package in making,\nchanges "
+                    + "will be lost if continued.\nClick Yes to continue. ", "Warning!!", JOptionPane.YES_NO_OPTION);
+            if(temp == JOptionPane.YES_OPTION){
+                jComboBox_pkgName.setVisible(false);
+                jList_createdpackage_names.setVisible(true);
+
+                jLabel_added.setVisible(false);
+                jButton_add.setEnabled(false);
+                jButton_preview.setEnabled(false);
+                jButton_save.setEnabled(false);
+
+                //reset
+                metadata_map = new HashMap<>();
+                jTextArea_components.setText("");
+                jTextField_metadata.setText("");
+            }else{
+                jRadioButton1.setSelected(true);
+            }
+        }
 
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
