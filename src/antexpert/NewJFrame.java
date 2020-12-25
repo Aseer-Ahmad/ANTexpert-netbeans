@@ -121,7 +121,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jList_createdpackage_names.setModel(defaultListModel_createdPackagenames);
         
         createFolderMap();
-        
      
     }
      
@@ -132,10 +131,12 @@ public class NewJFrame extends javax.swing.JFrame {
          if(  !file.isDirectory()){
              file.mkdirs();
          }else{
-             //populate list  created package names
+             //populate list with previous created packages names
              String [] names = file.list();
              for(String name: names)
                  defaultListModel_createdPackagenames.addElement(name);
+             if(names.length > 0)
+                 jButton_backup_packages.setEnabled(true);
          }
          
          file = new File(base_path+old_pkg);
@@ -766,9 +767,16 @@ public class NewJFrame extends javax.swing.JFrame {
         jList_createdpackage_names.setVisible(false);
         jComboBox_pkgName.setVisible(true);
         
-                
+        //activate backup if retreive folder contains files
+        String path = base_path + retreive;
+        File file = new File(path);
+        int len  = file.list().length ;
+        if(len > 0)
+            jButton_backup_packages.setEnabled(true);
+        
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+    
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         jComboBox_pkgName.setVisible(false);
@@ -779,7 +787,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_add.setEnabled(false);
         jButton_preview.setEnabled(false);
         jButton_save.setEnabled(false);
-        jButton_backup_packages.setEnabled(false);
+        //jButton_backup_packages.setEnabled(false);
         
         //reset
         metadata_map = new HashMap<>();
@@ -1170,9 +1178,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 l.add(TESTLOCAL);
             }
 
-            if(jComboBox_deploy_retreive.getSelectedItem() == "Deploy"){
+            if(jComboBox_deploy_retreive.getSelectedItem() == "deploy"){
                 xmlString = DeployProp.getDeployBuildString(l);
-            }else if( jComboBox_deploy_retreive.getSelectedItem() == "Retreive"){
+            }else if( jComboBox_deploy_retreive.getSelectedItem() == "retreive"){
                 xmlString = DeployProp.getRetreiveBuildString(l);
             }
 
@@ -1181,7 +1189,7 @@ public class NewJFrame extends javax.swing.JFrame {
             
             //use command stored in temp.
             try{
-                Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"}); 
+                //Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"}); 
             }catch(Exception ex){
                 ex.printStackTrace();
             }
