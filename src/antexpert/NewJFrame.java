@@ -1211,7 +1211,9 @@ public class NewJFrame extends javax.swing.JFrame {
             
             //use command stored in temp.
             try{
-                //Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"}); 
+//                Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"}); 
+                Runtime.getRuntime().exec("cmd /K start ant "+temp, null , new File(base_path+"\\Ant")); 
+
             }catch(Exception ex){
                 ex.printStackTrace();
             }
