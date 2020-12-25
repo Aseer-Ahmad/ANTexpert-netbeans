@@ -15,9 +15,19 @@ public class MdUtility {
     private String label;
     private String username;
     private String password;
+    private String security_token;
+
     private String maxpoll;
     private String org_type;
       
+    public String getSecurity_token() {
+        return security_token;
+    }
+
+    public void setSecurity_token(String security_token) {
+        this.security_token = security_token;
+    }
+    
     public String getLabel() {
         return label;
     }
@@ -58,10 +68,11 @@ public class MdUtility {
         this.org_type = org_type;
     }
 
-    public MdUtility(String label, String username, String password, String maxpoll, String org_type) {
+    public MdUtility(String label, String username, String password, String security_token, String maxpoll, String org_type) {
         this.label = label;
         this.username = username;
         this.password = password;
+        this.security_token = security_token;
         this.maxpoll = maxpoll;
         this.org_type = org_type;
     }
@@ -75,7 +86,7 @@ public class MdUtility {
                 "\n" +
                 "# Specify the login credentials for the desired Salesforce organization\n" +
                 "sf.username = "+ getUsername() + "\n" +
-                "sf.password = "+ getPassword()+ "\n" +
+                "sf.password = "+ getPassword() + getSecurity_token()+ "\n" +
                 "#sf.sessionId = <Insert your Salesforce session id here.  Use this or username/password above.  Cannot use both>\n" +
                 "#sf.pkgName = <Insert comma separated package names to be retrieved>\n" +
                 "#sf.zipFile = <Insert path of the zipfile to be retrieved>\n" +

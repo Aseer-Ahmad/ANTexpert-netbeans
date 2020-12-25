@@ -68,8 +68,8 @@ public class NewJFrame extends javax.swing.JFrame {
     public static String SELECTED_ORG_LABEL = "";
     public static final String newChangeLineComment = "<!--new changes here-->\n";
     public static float VERSION = 41.0f;
+    public static String version = "<version>" + VERSION + "</version>\n";
     public static final String head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Package xmlns=\"http://soap.sforce.com/2006/04/metadata\">\n";
-    public static final String version = "<version>" + VERSION + "</version>\n";
     public static final String tail = "</Package>\n";
     
     
@@ -95,7 +95,8 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     
      private void init() {
-        
+        this.setTitle("ANT Expert");
+         
         jTextArea_specifictests_deploy.setVisible(false);
          
         jList_createdpackage_names.setVisible(false);
@@ -154,7 +155,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 while ((line = br.readLine()) != null) {
                     String[] arr = line.split("\t");
                     if( !org_map.containsKey(arr[0])){
-                        org_map.put( arr[0], new MdUtility(arr[0], arr[1], arr[2], arr[3], arr[4]));
+                        org_map.put( arr[0], new MdUtility(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]));
                         defaultListModel_orglabels.addElement(arr[0]);
                     }
                 }
@@ -199,9 +200,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jComboBox_pkgName = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3_org_details = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jList_orgLabels = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel_urltype = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -211,6 +209,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButton_removeOrg = new javax.swing.JButton();
         jLabel_selectedOrg = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jList_orgLabels = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jComboBox_deploy_retreive = new javax.swing.JComboBox<>();
         jCheckBox_rollbackonerror = new javax.swing.JCheckBox();
@@ -242,9 +243,14 @@ public class NewJFrame extends javax.swing.JFrame {
         jPopupMenu.setFocusable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 51, 51));
 
-        jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Create/ Update Package"));
+        jPanel_pkg_details.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create/ Update Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
 
+        jButton_add.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_add.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_add.setForeground(new java.awt.Color(255, 255, 255));
         jButton_add.setText("Add   Components");
         jButton_add.setEnabled(false);
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
@@ -253,6 +259,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton_preview.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_preview.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_preview.setForeground(new java.awt.Color(255, 255, 255));
         jButton_preview.setText("Preview current Package");
         jButton_preview.setEnabled(false);
         jButton_preview.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +274,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_added.setForeground(new java.awt.Color(24, 219, 23));
         jLabel_added.setText("Added Components to Package. ");
 
+        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup_pkgaction.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButton1.setMnemonic(' ');
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("create");
@@ -276,7 +287,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup_pkgaction.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButton2.setText("update");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,6 +297,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton_save.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_save.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_save.setForeground(new java.awt.Color(255, 255, 255));
         jButton_save.setText("Save");
         jButton_save.setEnabled(false);
         jButton_save.addActionListener(new java.awt.event.ActionListener() {
@@ -292,7 +308,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jList_createdpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder("select package to update"));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jList_createdpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select package to update", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(153, 51, 0))); // NOI18N
         jList_createdpackage_names.setToolTipText("");
         jList_createdpackage_names.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -305,19 +323,18 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Enter Components"));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Components (line separated)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextArea_components.setColumns(20);
+        jTextArea_components.setFont(new java.awt.Font("Monospaced", 0, 15)); // NOI18N
         jTextArea_components.setRows(5);
         jTextArea_components.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -330,14 +347,15 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("select metadata"));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select metadata", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextField_metadata.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -358,6 +376,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jButton_backup_packages.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_backup_packages.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_backup_packages.setForeground(new java.awt.Color(255, 255, 255));
         jButton_backup_packages.setText("BACKUP");
         jButton_backup_packages.setEnabled(false);
         jButton_backup_packages.addActionListener(new java.awt.event.ActionListener() {
@@ -366,6 +387,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_pkgName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox_pkgName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "package", "destructiveChanges", "destructiveChangesPost", "destructiveChangesPre" }));
         jComboBox_pkgName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,11 +416,9 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel_added)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                            .addComponent(jLabel_added)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
                         .addComponent(jButton_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -431,7 +451,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2)
                             .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel_added)
                         .addGap(6, 6, 6)))
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -446,35 +466,28 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Organization "));
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 12)); // NOI18N
-        jLabel6.setText("select org name");
+        jPanel3_org_details.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Select Organization ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
 
-        jList_orgLabels.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList_orgLabelsMouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jList_orgLabelsMouseReleased(evt);
-            }
-        });
-        jScrollPane4.setViewportView(jList_orgLabels);
-
-        jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel7.setText("sf.serverurl");
 
         jLabel_urltype.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_urltype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_urltype.setText("-");
 
-        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
         jLabel_maxpoll.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_maxpoll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_maxpoll.setText("-");
 
+        jButton_addOrg.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_addOrg.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_addOrg.setForeground(new java.awt.Color(255, 255, 255));
         jButton_addOrg.setText("Add New Org Cred.");
         jButton_addOrg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -492,6 +505,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jButton_removeOrg.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_removeOrg.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_removeOrg.setForeground(new java.awt.Color(255, 255, 255));
         jButton_removeOrg.setText("Remove Selected Org.");
         jButton_removeOrg.setEnabled(false);
         jButton_removeOrg.addActionListener(new java.awt.event.ActionListener() {
@@ -504,24 +520,52 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_selectedOrg.setForeground(new java.awt.Color(102, 102, 255));
         jLabel_selectedOrg.setText("--No Org selected--");
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "slect org name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
+
+        jList_orgLabels.setFont(new java.awt.Font("Arial Narrow", 0, 16)); // NOI18N
+        jList_orgLabels.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_orgLabelsMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jList_orgLabelsMouseReleased(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jList_orgLabels);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout jPanel3_org_detailsLayout = new javax.swing.GroupLayout(jPanel3_org_details);
         jPanel3_org_details.setLayout(jPanel3_org_detailsLayout);
         jPanel3_org_detailsLayout.setHorizontalGroup(
             jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton_addOrg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton_removeOrg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -532,10 +576,11 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel_maxpoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(205, 205, 205))))
+                            .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
+                                .addComponent(jButton_selectorg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(238, Short.MAX_VALUE))))
         );
         jPanel3_org_detailsLayout.setVerticalGroup(
             jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,10 +588,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -560,21 +604,23 @@ public class NewJFrame extends javax.swing.JFrame {
                                             .addComponent(jLabel_urltype)))
                                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton_selectorg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton_selectorg)
+                                    .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(13, 13, 13))))
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                         .addComponent(jButton_addOrg)
                         .addGap(18, 18, 18)
                         .addComponent(jButton_removeOrg)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Select Organization", jPanel3_org_details);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Deploy/ Retreive Package"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Deploy/ Retreive Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
         jPanel2.setEnabled(false);
 
+        jComboBox_deploy_retreive.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox_deploy_retreive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "deploy", "retreive" }));
         jComboBox_deploy_retreive.setEnabled(false);
         jComboBox_deploy_retreive.addActionListener(new java.awt.event.ActionListener() {
@@ -583,12 +629,15 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox_rollbackonerror.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jCheckBox_rollbackonerror.setText("rollbackonError");
         jCheckBox_rollbackonerror.setEnabled(false);
 
+        jCheckBox_checkonly.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jCheckBox_checkonly.setText("checkOnly");
         jCheckBox_checkonly.setEnabled(false);
 
+        jCheckBox_testlevelLocal.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jCheckBox_testlevelLocal.setText("testLevel-local");
         jCheckBox_testlevelLocal.setEnabled(false);
         jCheckBox_testlevelLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -597,6 +646,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox_testLevel_specific.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jCheckBox_testLevel_specific.setText("testLevel-specific");
         jCheckBox_testLevel_specific.setEnabled(false);
         jCheckBox_testLevel_specific.addActionListener(new java.awt.event.ActionListener() {
@@ -614,6 +664,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jTextArea_specifictests_deploy.setColumns(20);
+        jTextArea_specifictests_deploy.setFont(new java.awt.Font("Monospaced", 0, 15)); // NOI18N
         jTextArea_specifictests_deploy.setRows(5);
         jScrollPane5.setViewportView(jTextArea_specifictests_deploy);
 
@@ -632,7 +683,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(jCheckBox_testLevel_specific))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
                 .addComponent(jButton_deploy_retreive)
                 .addContainerGap())
         );
@@ -640,21 +691,23 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane5)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jCheckBox_rollbackonerror)
                                 .addComponent(jButton_deploy_retreive))
                             .addComponent(jComboBox_deploy_retreive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox_checkonly)
+                        .addComponent(jCheckBox_checkonly, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCheckBox_testlevelLocal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox_testLevel_specific)))
-                .addGap(0, 80, Short.MAX_VALUE))
+                        .addComponent(jCheckBox_testLevel_specific)
+                        .addGap(0, 116, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Deploy/Retreive", jPanel2);
@@ -664,20 +717,17 @@ public class NewJFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel_pkg_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -887,6 +937,7 @@ public class NewJFrame extends javax.swing.JFrame {
             sb.append("\t<name>"+key_name+"</name>\n</types>\n\n");    
         }
         
+//        VERSION = Float.parseFloat(jTextField_pkg_version.getText().toString());
         sb.append(version);
         sb.append(tail);
         
@@ -906,11 +957,12 @@ public class NewJFrame extends javax.swing.JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 2, 2));
 
-        JTextField username = new JTextField(10);
-        JTextField password = new JTextField(10);
-        JTextField maxpoll = new JTextField(10);
+        JTextField username = new JTextField(15);
+        JTextField password = new JTextField(15);
+        JTextField securitytoken = new JTextField(15);
+        JTextField maxpoll = new JTextField(15);
         maxpoll.setText("20");
-        JTextField label = new JTextField(10);
+        JTextField label = new JTextField(15);
         
         ButtonGroup group = new ButtonGroup();
         JRadioButton test_org = new JRadioButton();
@@ -927,6 +979,8 @@ public class NewJFrame extends javax.swing.JFrame {
         panel.add(username);
         panel.add(new JLabel("password : "));
         panel.add(password);
+        panel.add(new JLabel("Security Token : "));
+        panel.add(securitytoken);
         panel.add(new JLabel("maxpoll : "));
         panel.add(maxpoll);
         panel.add(new JLabel("Select servel url "));
@@ -944,19 +998,20 @@ public class NewJFrame extends javax.swing.JFrame {
         // add null check for username and password
         if(option == JOptionPane.OK_OPTION && !org_map.containsKey(label.getText()) && !label.getText().isEmpty() ){
   
-            String l, u, p, m, tg;
+            String l, u, p, m, tg, st;
             l = label.getText();
             u = username.getText();
             p = password.getText();
+            st = securitytoken.getText();
             m = maxpoll.getText();
             tg = test_org.isSelected()? "test" : "login";
             
-            org_map.put(l, new MdUtility( l, u, p, m,tg) );
+            org_map.put(l, new MdUtility( l, u, p, st, m,tg) );
             
             try{
                BufferedWriter bw = new BufferedWriter(new FileWriter(base_path + config, true));
-               //label username password maxpoll tg
-               bw.write(l+"\t"+u+"\t"+p+"\t"+m+"\t"+tg+"\n");
+               //label username password security_token maxpoll tg
+               bw.write(l+"\t"+u+"\t"+p+"\t"+st+"\t"+m+"\t"+tg+"\n");
                bw.close();
             }catch(IOException ex){
                 ex.printStackTrace();
@@ -1182,9 +1237,9 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jButton_deploy_retreiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_deploy_retreiveActionPerformed
         // TODO add your handling code here:
         if( jComboBox_deploy_retreive.isEnabled() ){
-            
+
             String temp = jComboBox_deploy_retreive.getSelectedItem().toString();
-            ArrayList<Integer> l = new ArrayList<Integer>(); 
+            ArrayList<Integer> l = new ArrayList<Integer>();
             String xmlString = "";
 
             if(jCheckBox_checkonly.isSelected()){
@@ -1208,19 +1263,64 @@ public class NewJFrame extends javax.swing.JFrame {
 
             //write build.xml
             writeTobuildProp(xmlString);
-            
+
             //use command stored in temp.
             try{
-//                Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"}); 
-                Runtime.getRuntime().exec("cmd /K start ant "+temp, null , new File(base_path+"\\Ant")); 
+                //                Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"});
+                Runtime.getRuntime().exec("cmd /K start ant "+temp, null , new File(base_path+"\\Ant"));
 
             }catch(Exception ex){
                 ex.printStackTrace();
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton_deploy_retreiveActionPerformed
+
+    private void jCheckBox_testLevel_specificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_testLevel_specificActionPerformed
+        // TODO add your handling code here:
+
+        if(jCheckBox_testLevel_specific.isSelected()){
+            jTextArea_specifictests_deploy.setVisible(true);
+            jCheckBox_testlevelLocal.setEnabled(false);
+        }else{
+            jCheckBox_testlevelLocal.setEnabled(true);
+            jTextArea_specifictests_deploy.setVisible(false);
+        }
+
+    }//GEN-LAST:event_jCheckBox_testLevel_specificActionPerformed
+
+    private void jCheckBox_testlevelLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_testlevelLocalActionPerformed
+        // TODO add your handling code here:
+        if(jCheckBox_testlevelLocal.isSelected()){
+            jCheckBox_testLevel_specific.setEnabled(false);
+        }else{
+            jCheckBox_testLevel_specific.setEnabled(true);
+        }
+    }//GEN-LAST:event_jCheckBox_testlevelLocalActionPerformed
+
+    private void jComboBox_deploy_retreiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_deploy_retreiveActionPerformed
+        // TODO add your handling code here:
+
+        String temp = jComboBox_deploy_retreive.getSelectedItem().toString();
+        if(temp == "deploy"){
+            jCheckBox_checkonly.setEnabled(true);
+            jCheckBox_rollbackonerror.setEnabled(true);
+            jCheckBox_testLevel_specific.setEnabled(true);
+            jCheckBox_testlevelLocal.setEnabled(true);
+
+            clearCheckBoxSelection();
+
+        }else if(temp == "retreive"){
+            jCheckBox_checkonly.setEnabled(false);
+            jCheckBox_rollbackonerror.setEnabled(false);
+            jCheckBox_testLevel_specific.setEnabled(false);
+            jCheckBox_testlevelLocal.setEnabled(false);
+
+            clearCheckBoxSelection();
+        }
+
+    }//GEN-LAST:event_jComboBox_deploy_retreiveActionPerformed
 
     public void writeTobuildProp(String str){
         
@@ -1233,52 +1333,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         
     }
-    
-    private void jComboBox_deploy_retreiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_deploy_retreiveActionPerformed
-        // TODO add your handling code here:
         
-        String temp = jComboBox_deploy_retreive.getSelectedItem().toString();
-        if(temp == "deploy"){
-            jCheckBox_checkonly.setEnabled(true);
-            jCheckBox_rollbackonerror.setEnabled(true);
-            jCheckBox_testLevel_specific.setEnabled(true);
-            jCheckBox_testlevelLocal.setEnabled(true);
-            
-            clearCheckBoxSelection();
-            
-        }else if(temp == "retreive"){
-            jCheckBox_checkonly.setEnabled(false);
-            jCheckBox_rollbackonerror.setEnabled(false);
-            jCheckBox_testLevel_specific.setEnabled(false);
-            jCheckBox_testlevelLocal.setEnabled(false);
-            
-            clearCheckBoxSelection();
-        }
-        
-    }//GEN-LAST:event_jComboBox_deploy_retreiveActionPerformed
-
-    private void jCheckBox_testLevel_specificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_testLevel_specificActionPerformed
-        // TODO add your handling code here:
-        
-      if(jCheckBox_testLevel_specific.isSelected()){
-          jTextArea_specifictests_deploy.setVisible(true);
-          jCheckBox_testlevelLocal.setEnabled(false);
-      }else{
-          jCheckBox_testlevelLocal.setEnabled(true);
-          jTextArea_specifictests_deploy.setVisible(false);          
-      }
-     
-    }//GEN-LAST:event_jCheckBox_testLevel_specificActionPerformed
-
-    private void jCheckBox_testlevelLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_testlevelLocalActionPerformed
-        // TODO add your handling code here:
-        if(jCheckBox_testlevelLocal.isSelected()){
-            jCheckBox_testLevel_specific.setEnabled(false);
-        }else{
-            jCheckBox_testLevel_specific.setEnabled(true);
-        }
-    }//GEN-LAST:event_jCheckBox_testlevelLocalActionPerformed
-    
     public void clearCheckBoxSelection(){
         jCheckBox_checkonly.setSelected(false);
         jCheckBox_rollbackonerror.setSelected(false);
@@ -1287,7 +1342,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jCheckBox_testlevelLocal.setSelected(false);
     }
     
-    public static String createPackageString(Map<String, String[]> allcomp){
+    public String createPackageString(Map<String, String[]> allcomp){
 
         StringBuilder sb = new StringBuilder();
         sb.append(head);
@@ -1308,6 +1363,7 @@ public class NewJFrame extends javax.swing.JFrame {
             sb.append("\t<name>"+key_name+"</name>\n</types>\n\n");    
         }
         
+//        VERSION = Float.parseFloat(jTextField_pkg_version.getText().toString());
         sb.append(version);
         sb.append(tail);
 
@@ -1368,7 +1424,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox_testlevelLocal;
     private javax.swing.JComboBox<String> jComboBox_deploy_retreive;
     private javax.swing.JComboBox<String> jComboBox_pkgName;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_added;
@@ -1384,6 +1439,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3_org_details;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel_pkg_details;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JRadioButton jRadioButton1;
