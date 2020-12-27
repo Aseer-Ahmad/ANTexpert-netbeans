@@ -428,17 +428,12 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
                 .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2))
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel_added)
                         .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createSequentialGroup()
@@ -469,14 +464,14 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel3_org_details.setBackground(new java.awt.Color(0, 204, 204));
         jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Select Organization ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 1, 20))); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Bell MT", 1, 17)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
         jLabel7.setText("sf.serverurl");
 
         jLabel_urltype.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_urltype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_urltype.setText("-");
 
-        jLabel9.setFont(new java.awt.Font("Bell MT", 1, 17)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
         jLabel_maxpoll.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -562,10 +557,10 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(jLabel7))
-                    .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3_org_detailsLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel_urltype, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_urltype, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,7 +655,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_deploy_retreive.setBackground(new java.awt.Color(0, 0, 0));
         jButton_deploy_retreive.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton_deploy_retreive.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_deploy_retreive.setText("Open CMD for action");
+        jButton_deploy_retreive.setText("Create Target Action");
         jButton_deploy_retreive.setEnabled(false);
         jButton_deploy_retreive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -674,7 +669,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextArea_specifictests_deploy.setToolTipText("Line Separated Tests");
         jScrollPane5.setViewportView(jTextArea_specifictests_deploy);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
         jLabel1.setText("line separated tests-specify");
 
@@ -698,7 +693,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                         .addComponent(jButton_deploy_retreive)
                         .addGap(40, 40, 40))))
         );
@@ -729,7 +724,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(2, 2, 2)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 27, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Deploy/Retreive", jPanel2);
@@ -1311,7 +1306,7 @@ public class NewJFrame extends javax.swing.JFrame {
                    JOptionPane.showMessageDialog(null, "There are no packages created. Create packages to retreive.");
                 }else{
                     try{
-                        Files.delete( Paths.get(base_path+retreivedSource) );
+                        deleteDirectory( new File(base_path+retreivedSource));
                     }catch(Exception ex){
                         ex.printStackTrace();
                     }
@@ -1335,6 +1330,17 @@ public class NewJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton_deploy_retreiveActionPerformed
 
+    //recursive delete files and folders
+    public boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
+    
     private void jCheckBox_testLevel_specificActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_testLevel_specificActionPerformed
         // TODO add your handling code here:
 

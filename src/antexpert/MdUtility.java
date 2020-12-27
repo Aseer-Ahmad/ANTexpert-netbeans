@@ -103,7 +103,7 @@ public class MdUtility {
     public String metadata_list = "ActionLinkGroupTemplate\n" +
                                 "AnalyticSnapshot\n" +
                                 "AnimationRule\n" +
-                                "ApexClass\" selected=\"selected\n" +
+                                "ApexClass\n" +
                                 "ApexComponent\n" +
                                 "ApexEmailNotifications\n" +
                                 "ApexPage\n" +
