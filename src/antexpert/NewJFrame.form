@@ -325,8 +325,8 @@
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Enter Components (line separated)">
-                  <Font PropertyName="font" name="Tahoma" size="16" style="2"/>
+                <TitledBorder title="Enter Components Full Name (line separated)">
+                  <Font PropertyName="font" name="Tahoma" size="14" style="2"/>
                   <Color PropertyName="color" blue="0" green="33" red="99" type="rgb"/>
                 </TitledBorder>
               </Border>
@@ -384,7 +384,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="select metadata">
                   <Border PropertyName="innerBorder" info="null"/>
-                  <Font PropertyName="font" name="Tahoma" size="16" style="2"/>
+                  <Font PropertyName="font" name="Tahoma" size="14" style="2"/>
                   <Color PropertyName="color" blue="0" green="33" red="99" type="rgb"/>
                 </TitledBorder>
               </Border>
@@ -471,7 +471,6 @@
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jList_createdpackage_namesMouseClicked"/>
@@ -567,7 +566,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -707,7 +706,7 @@
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                     <TitledBorder title="select org name">
-                      <Font PropertyName="font" name="Tahoma" size="16" style="2"/>
+                      <Font PropertyName="font" name="Tahoma" size="14" style="2"/>
                       <Color PropertyName="color" blue="0" green="33" red="99" type="rgb"/>
                     </TitledBorder>
                   </Border>

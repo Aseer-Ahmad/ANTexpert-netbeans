@@ -313,7 +313,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jPanel4.setBackground(new java.awt.Color(0, 204, 204));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Components (line separated)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Components Full Name (line separated)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 14), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextArea_components.setColumns(20);
         jTextArea_components.setFont(new java.awt.Font("Monospaced", 0, 15)); // NOI18N
@@ -341,7 +341,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 204, 204));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select metadata", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select metadata", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 14), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextField_metadata.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -382,7 +382,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jList_createdpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select package to update", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(153, 51, 0))); // NOI18N
         jList_createdpackage_names.setFont(new java.awt.Font("Times New Roman", 0, 17)); // NOI18N
-        jList_createdpackage_names.setToolTipText("");
         jList_createdpackage_names.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jList_createdpackage_namesMouseClicked(evt);
@@ -519,7 +518,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_selectedOrg.setText("--No Org selected--");
 
         jPanel6.setBackground(new java.awt.Color(0, 204, 204));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select org name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select org name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 14), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jList_orgLabels.setFont(new java.awt.Font("Arial Narrow", 0, 16)); // NOI18N
         jList_orgLabels.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -584,7 +583,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
             .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
@@ -903,13 +902,15 @@ public class NewJFrame extends javax.swing.JFrame {
             bf.write(packageString);
             bf.close();
 
-            defaultListModel_createdPackagenames.addElement(jComboBox_pkgName.getSelectedItem().toString()+".xml");
-
+            String temp = jComboBox_pkgName.getSelectedItem().toString()+".xml";
+            if(!defaultListModel_createdPackagenames.contains(temp)){
+                defaultListModel_createdPackagenames.addElement(temp);
+            }
         }catch(IOException ex){
             ex.printStackTrace();
         }
 
-        JOptionPane.showMessageDialog( new JFrame(),jComboBox_pkgName.getSelectedItem()+" has been saved.\nBegin creating new package."); 
+        JOptionPane.showMessageDialog( new JFrame(),jComboBox_pkgName.getSelectedItem()+" has been saved.\nBegin creating new package.\nTo edit, switch to update mode."); 
 
         jButton_preview.setEnabled(false);
         jButton_save.setEnabled(false);
@@ -1307,7 +1308,12 @@ public class NewJFrame extends javax.swing.JFrame {
                 if( new File(base_path + retreive).list().length == 0){
                    NO_ACITON = true;
                    JOptionPane.showMessageDialog(null, "There are no packages created. Create packages to retreive.");
-                   
+                }else{
+                    try{
+                        Files.delete( Paths.get(base_path+retreivedSource) );
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
                 }
             }
 
@@ -1316,7 +1322,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             //use command stored in temp.
             try{
-                //                Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"});
+                //Runtime.getRuntime().exec(new String[] {"cmd", "/K", "Start"});
                 if(!NO_ACITON)
                     Runtime.getRuntime().exec("cmd /K start ant " + temp, null , new File(base_path+"\\Ant"));
 
