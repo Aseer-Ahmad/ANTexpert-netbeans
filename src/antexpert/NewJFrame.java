@@ -246,13 +246,14 @@ public class NewJFrame extends javax.swing.JFrame {
         setMaximumSize(new Dimension(100, 100));
         setResizable(false);
 
-        jPanel_pkg_details.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create/ Update Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
+        jPanel_pkg_details.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel_pkg_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create/ Update Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 1, 20))); // NOI18N
 
         jButton_add.setBackground(new java.awt.Color(51, 51, 51));
         jButton_add.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jButton_add.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_add.setText("Add   Components");
+        jButton_add.setText("Add Components");
+        jButton_add.setToolTipText("");
         jButton_add.setEnabled(false);
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,12 +273,12 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jLabel_added.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel_added.setForeground(new java.awt.Color(24, 219, 23));
+        jLabel_added.setForeground(new java.awt.Color(0, 255, 102));
         jLabel_added.setText("Added Components to Package. ");
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jRadioButton1.setBackground(new java.awt.Color(0, 204, 204));
         buttonGroup_pkgaction.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jRadioButton1.setFont(new java.awt.Font("Californian FB", 1, 17)); // NOI18N
         jRadioButton1.setMnemonic(' ');
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("create");
@@ -288,9 +289,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jRadioButton2.setBackground(new java.awt.Color(0, 204, 204));
         buttonGroup_pkgaction.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jRadioButton2.setFont(new java.awt.Font("Californian FB", 1, 17)); // NOI18N
         jRadioButton2.setText("update");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,7 +310,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(0, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enter Components (line separated)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextArea_components.setColumns(20);
@@ -337,7 +338,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(0, 204, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select metadata", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jTextField_metadata.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -378,6 +379,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jList_createdpackage_names.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select package to update", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16), new java.awt.Color(153, 51, 0))); // NOI18N
+        jList_createdpackage_names.setFont(new java.awt.Font("Times New Roman", 0, 17)); // NOI18N
         jList_createdpackage_names.setToolTipText("");
         jList_createdpackage_names.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -407,18 +409,17 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jComboBox_pkgName, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addComponent(jButton_add)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton_backup_packages))
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_preview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_pkg_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                            .addComponent(jButton_add)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                            .addComponent(jButton_backup_packages))
+                        .addGroup(jPanel_pkg_detailsLayout.createSequentialGroup()
+                            .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton_preview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(338, 338, 338))
         );
         jPanel_pkg_detailsLayout.setVerticalGroup(
@@ -460,18 +461,20 @@ public class NewJFrame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setForeground(new java.awt.Color(0, 102, 102));
+        jTabbedPane1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
 
-        jPanel3_org_details.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Select Organization ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
+        jPanel3_org_details.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel3_org_details.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Select Organization ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 1, 20))); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Bell MT", 1, 17)); // NOI18N
         jLabel7.setText("sf.serverurl");
 
         jLabel_urltype.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_urltype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_urltype.setText("-");
 
-        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Bell MT", 1, 17)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
         jLabel_maxpoll.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -510,10 +513,10 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jLabel_selectedOrg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel_selectedOrg.setForeground(new java.awt.Color(102, 102, 255));
+        jLabel_selectedOrg.setForeground(new java.awt.Color(0, 51, 255));
         jLabel_selectedOrg.setText("--No Org selected--");
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(0, 204, 204));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "select org name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 16), new java.awt.Color(153, 51, 0))); // NOI18N
 
         jList_orgLabels.setFont(new java.awt.Font("Arial Narrow", 0, 16)); // NOI18N
@@ -531,9 +534,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,9 +563,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jLabel_urltype, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel3_org_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3_org_detailsLayout.createSequentialGroup()
@@ -610,7 +611,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Select Organization", jPanel3_org_details);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Deploy/ Retreive Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 0, 20))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Deploy/ Retreive Package", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Agency FB", 1, 20), new java.awt.Color(51, 51, 51))); // NOI18N
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setEnabled(false);
 
         jComboBox_deploy_retreive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "deploy", "retreive" }));
@@ -621,12 +624,18 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox_rollbackonerror.setBackground(new java.awt.Color(0, 204, 204));
+        jCheckBox_rollbackonerror.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jCheckBox_rollbackonerror.setText("rollbackonError");
         jCheckBox_rollbackonerror.setEnabled(false);
 
+        jCheckBox_checkonly.setBackground(new java.awt.Color(0, 204, 204));
+        jCheckBox_checkonly.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jCheckBox_checkonly.setText("checkOnly");
         jCheckBox_checkonly.setEnabled(false);
 
+        jCheckBox_testlevelLocal.setBackground(new java.awt.Color(0, 204, 204));
+        jCheckBox_testlevelLocal.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jCheckBox_testlevelLocal.setText("testLevel-local");
         jCheckBox_testlevelLocal.setEnabled(false);
         jCheckBox_testlevelLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -635,6 +644,8 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox_testLevel_specific.setBackground(new java.awt.Color(0, 204, 204));
+        jCheckBox_testLevel_specific.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jCheckBox_testLevel_specific.setText("testLevel-specific");
         jCheckBox_testLevel_specific.setEnabled(false);
         jCheckBox_testLevel_specific.addActionListener(new java.awt.event.ActionListener() {
@@ -643,6 +654,8 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton_deploy_retreive.setBackground(new java.awt.Color(0, 0, 0));
+        jButton_deploy_retreive.setForeground(new java.awt.Color(255, 255, 255));
         jButton_deploy_retreive.setText("Open CMD for action");
         jButton_deploy_retreive.setEnabled(false);
         jButton_deploy_retreive.addActionListener(new java.awt.event.ActionListener() {
@@ -672,7 +685,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(jCheckBox_rollbackonerror))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
                 .addComponent(jButton_deploy_retreive)
                 .addGap(40, 40, 40))
         );
