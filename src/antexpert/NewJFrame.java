@@ -467,21 +467,19 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
         jLabel7.setText("sf.serverurl");
 
-        jLabel_urltype.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_urltype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_urltype.setText("-");
 
         jLabel9.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
         jLabel9.setText("sf.maxpoll");
 
-        jLabel_maxpoll.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel_maxpoll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_maxpoll.setText("-");
 
         jButton_addOrg.setBackground(new java.awt.Color(51, 51, 51));
-        jButton_addOrg.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_addOrg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton_addOrg.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_addOrg.setText("Add New Org Cred.");
+        jButton_addOrg.setText("Add New Org Credentials");
         jButton_addOrg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_addOrgActionPerformed(evt);
