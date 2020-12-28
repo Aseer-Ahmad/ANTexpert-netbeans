@@ -206,6 +206,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel_urltype = new javax.swing.JLabel();
         jLabel_maxpoll = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel_deploy = new javax.swing.JPanel();
         jComboBox_deploy_retreive = new javax.swing.JComboBox<>();
@@ -314,7 +315,7 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel_showDeployLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_showDeployLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel_showDeployLayout.setVerticalGroup(
@@ -363,6 +364,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton_addOrg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton_addOrg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/antexpert/add.png"))); // NOI18N
         jButton_addOrg.setText("Add Org");
+        jButton_addOrg.setToolTipText("Add new Organization Credentials");
         jButton_addOrg.setBorder(null);
         jButton_addOrg.setContentAreaFilled(false);
         jButton_addOrg.addActionListener(new java.awt.event.ActionListener() {
@@ -433,6 +435,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel4.setText("Remove");
+        jLabel4.setToolTipText("Remove selected org credentials");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        jLabel8.setText("click to select org.");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -452,7 +458,6 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel4)))))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -470,8 +475,13 @@ public class NewJFrame extends javax.swing.JFrame {
                                         .addComponent(jLabel_maxpoll, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButton_selectorg, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(24, 24, 24))
         );
         jPanel7Layout.setVerticalGroup(
@@ -490,7 +500,9 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel4))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel_selectedOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -924,9 +936,9 @@ public class NewJFrame extends javax.swing.JFrame {
             if(jComboBox_deploy_retreive.getSelectedItem() == "deploy"){
                 xmlString = DeployProp.getDeployBuildString(l);
                 //check if files available
-                if( new File(base_path + retreivedSource).list().length == 0){
+                if( !new File(base_path+retreivedSource).exists() || new File(base_path + retreivedSource).list().length == 0){
                     NO_ACITON = true;
-                    JOptionPane.showMessageDialog(null, "There are no files to deploy.");
+                    JOptionPane.showMessageDialog(null, "There are no files to Deploy.");
                 }else{
                     //move any post pre deployment files to folder
                     String pre_path = base_path + retreive + "\\destructiveChangesPre.xml";
@@ -1619,6 +1631,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_added;
     private javax.swing.JLabel jLabel_maxpoll;
