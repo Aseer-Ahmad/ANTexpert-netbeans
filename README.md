@@ -16,7 +16,7 @@ Breif of some functionalities:
 1. BACKUP - Once a single or more packages are created and SAVED, using this function will move all those packages into a backup folder
             with the moments timestamp. This functions helps in keeping a track of previously successfull package.
 
-2. UPDATE - After a package has been created and saved, if updation is required in the package, swictch to update mode and click the file
+2. UPDATE - After a package has been created and saved, if updation is required in the package, switch to update mode and click the file
             name from the right most list to begin editting. 
 
 3. SAVE - Once a metadata and its components are added to a package, this function will save the package created to the respective
